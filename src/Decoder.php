@@ -24,6 +24,21 @@ class Decoder extends Coder implements DecoderInterface
         }
     }
 
+    public function checksum(string $algorithm = self::CHECKSUM_ALGORITHM): static
+    {
+        try {
+            $checksumLength = mb_strlen(hash($algorithm, '', binary: true), encoding: '8bit');
+            $dataLength = mb_strlen($this->data, encoding: '8bit') - $checksumLength;
+            $data = mb_strcut($this->data, 0, $dataLength, encoding: '8bit');
+            if ((new Encoder($data))->checksum($algorithm)->getData() !== $this->data) {
+                throw new Exception\CouldNotDecodeData($this, __METHOD__);
+            }
+            return static::create($this, $data);
+        } catch (Throwable $reason) {
+            throw new Exception\CouldNotDecodeData($this, __METHOD__, $reason);
+        }
+    }
+
     public function zlib(int $maxLength = self::ZLIB_MAX_LENGTH): static
     {
         try {

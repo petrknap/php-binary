@@ -30,6 +30,34 @@ final class DecoderTest extends CoderTestCase
         ];
     }
 
+    #[DataProvider('dataChecksum')]
+    public function testDecodesChecksum(string $decoded, string $encoded, string $algorithm): void
+    {
+        self::assertSame(
+            $decoded,
+            (new Decoder($encoded))->checksum($algorithm)->getData(),
+        );
+    }
+
+    #[DataProvider('dataChecksumThrows')]
+    public function testChecksumThrows(string $data, string $algorithm): void
+    {
+        self::expectException(Exception\CouldNotDecodeData::class);
+
+        (new Decoder($data))->checksum($algorithm);
+    }
+
+    public static function dataChecksumThrows(): array
+    {
+        $dataSet = self::dataChecksum()[CoderInterface::CHECKSUM_ALGORITHM];
+        return [
+            'wrong algorithm' => [$dataSet[1], '?'],
+            'short data' => ['?', CoderInterface::CHECKSUM_ALGORITHM],
+            'wrong data' => [$dataSet[0], CoderInterface::CHECKSUM_ALGORITHM],
+            'wrong checksum' => ['?' . $dataSet[1], CoderInterface::CHECKSUM_ALGORITHM],
+        ];
+    }
+
     #[DataProvider('dataZlib')]
     public function testDecodesZlib(string $decoded, string $encoded): void
     {
