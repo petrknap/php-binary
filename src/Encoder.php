@@ -21,6 +21,16 @@ class Encoder extends Coder implements EncoderInterface
         }
     }
 
+    public function checksum(string $algorithm = self::CHECKSUM_ALGORITHM): static
+    {
+        try {
+            $checksum = hash($algorithm, $this->data, binary: true);
+            return static::create($this, $this->data . $checksum);
+        } catch (Throwable $reason) {
+            throw new Exception\CouldNotEncodeData($this, __METHOD__, $reason);
+        }
+    }
+
     public function zlib(int $encoding = self::ZLIB_ENCODING, int $level = self::ZLIB_LEVEL): static
     {
         try {

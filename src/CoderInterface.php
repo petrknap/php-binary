@@ -9,6 +9,8 @@ namespace PetrKnap\Binary;
  */
 interface CoderInterface
 {
+    public const CHECKSUM_ALGORITHM = 'crc32';
+
     public function getData(): string;
 
     /**
@@ -19,6 +21,15 @@ interface CoderInterface
      * @throws TExceptionCouldNotCodeData
      */
     public function base64(): static;
+
+    /**
+     * Encodes/decodes {@see hash()} of data to data
+     *
+     * @link https://en.wikipedia.org/wiki/Checksum
+     *
+     * @throws TExceptionCouldNotCodeData
+     */
+    public function checksum(string $algorithm = self::CHECKSUM_ALGORITHM): static;
 
     /**
      * {@see zlib_encode()}/{@see zlib_decode()} data

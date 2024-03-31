@@ -15,6 +15,30 @@ final class EncoderTest extends CoderTestCase
         );
     }
 
+    #[DataProvider('dataChecksum')]
+    public function testEncodesChecksum(string $decoded, string $encoded, string $algorithm): void
+    {
+        self::assertSame(
+            $encoded,
+            (new Encoder($decoded))->checksum($algorithm)->getData(),
+        );
+    }
+
+    #[DataProvider('dataChecksumThrows')]
+    public function testChecksumThrows(string $algorithm): void
+    {
+        self::expectException(Exception\CouldNotEncodeData::class);
+
+        (new Encoder(''))->checksum($algorithm);
+    }
+
+    public static function dataChecksumThrows(): array
+    {
+        return [
+            'wrong algorithm' => ['?'],
+        ];
+    }
+
     #[DataProvider('dataZlib')]
     public function testEncodesZlib(string $decoded, string $encoded, int $encoding, int $level): void
     {

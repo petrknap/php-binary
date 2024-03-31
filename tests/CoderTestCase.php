@@ -17,6 +17,15 @@ abstract class CoderTestCase extends TestCase
         ];
     }
 
+    public static function dataChecksum(): array
+    {
+        $data = base64_decode(self::DATA_BASE64);
+        return [
+            'crc32' => [$data, $data . hex2bin('95a41ef8'), 'crc32'],
+            'sha1' => [$data, $data . hex2bin('d0dc1cf9bf61884f8e7982e0b1b87954bd9ee9c7'), 'sha1'],
+        ];
+    }
+
     public static function dataZlib(): array
     {
         $data = base64_decode(self::DATA_BASE64);
