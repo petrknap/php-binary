@@ -49,9 +49,12 @@ final class DecoderTest extends CoderTestCase
 
     public static function dataChecksumThrows(): array
     {
+        $dataSet = self::dataChecksum()[CoderInterface::CHECKSUM_ALGORITHM];
         return [
-            'wrong algorithm' => ['', '?'],
-            'wrong checksum' => ['?', CoderInterface::CHECKSUM_ALGORITHM],
+            'wrong algorithm' => [$dataSet[1], '?'],
+            'short data' => ['?', CoderInterface::CHECKSUM_ALGORITHM],
+            'wrong data' => [$dataSet[0], CoderInterface::CHECKSUM_ALGORITHM],
+            'wrong checksum' => ['?' . $dataSet[1], CoderInterface::CHECKSUM_ALGORITHM],
         ];
     }
 
