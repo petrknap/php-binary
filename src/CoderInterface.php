@@ -11,6 +11,8 @@ interface CoderInterface
 {
     public const CHECKSUM_ALGORITHM = 'crc32';
 
+    public function withData(string $data): static;
+
     public function getData(): string;
 
     /**

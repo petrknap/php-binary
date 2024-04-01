@@ -1,7 +1,7 @@
 # Library for work with binaries
 
 Library for basic work with binary data in PHP.
-See the sample below for more information, or check out [`CoderInterface`](./src/CoderInterface.php).
+See the examples below for more information, or check out [`CoderInterface`](./src/CoderInterface.php) and [`SerializerInterface`](./src/SerializerInterface.php).
 
 ```php
 use PetrKnap\Binary\Binary;
@@ -11,6 +11,19 @@ $encoded = Binary::encode($data)->checksum()->zlib()->base64(urlSafe: true)->get
 $decoded = Binary::decode($encoded)->base64()->zlib()->checksum()->getData();
 
 printf('Data was coded into `%s` %s.', $encoded, $decoded === $data ? 'successfully' : 'unsuccessfully');
+```
+
+```php
+use PetrKnap\Binary\Binary;
+
+$data = [
+    'type' => 'image/png',
+    'data' => base64_decode('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAAXNSR0IArs4c6QAAAA1JREFUGFdj+L+U4T8ABu8CpCYJ1DQAAAAASUVORK5CYII='),
+];
+$serialized = Binary::serialize($data);
+$unserialized = Binary::unserialize($serialized);
+
+printf('Data was serialized into `%s` %s.', base64_encode($serialized), $unserialized === $data ? 'successfully' : 'unsuccessfully');
 ```
 
 ---
