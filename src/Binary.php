@@ -15,4 +15,23 @@ final class Binary
     {
         return new Decoder($data);
     }
+
+    public static function serialize(mixed $data): string
+    {
+        return self::getSerializer()->serialize(serializable: $data);
+    }
+
+    public static function unserialize(string $data): mixed
+    {
+        return self::getSerializer()->unserialize(serialized: $data);
+    }
+
+    private static function getSerializer(): Serializer
+    {
+        static $serializer;
+        return $serializer ??= new Serializer(
+            new Encoder(),
+            new Decoder(),
+        );
+    }
 }
