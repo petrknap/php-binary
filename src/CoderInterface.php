@@ -4,41 +4,37 @@ declare(strict_types=1);
 
 namespace PetrKnap\Binary;
 
+use PetrKnap\Shorts\Exception;
+
 /**
- * @template TExceptionCouldNotCodeData of Exception\CouldNotCodeData
+ * @internal please use subinterface
+ *
+ * @template TExceptionCouldNotProcessData of Exception\CouldNotProcessData
  */
 interface CoderInterface
 {
-    public const CHECKSUM_ALGORITHM = 'crc32';
-
     public function withData(string $data): static;
 
     public function getData(): string;
 
     /**
-     * {@see base64_encode()}/{@see base64_decode()} the data
+     * @see Coder\Base64
      *
-     * @link https://en.wikipedia.org/wiki/Base64
-     *
-     * @throws TExceptionCouldNotCodeData
+     * @throws TExceptionCouldNotProcessData
      */
     public function base64(): static;
 
     /**
-     * Encodes/decodes the data {@see hash()} into the data
+     * @see Coder\Checksum
      *
-     * @link https://en.wikipedia.org/wiki/Checksum
-     *
-     * @throws TExceptionCouldNotCodeData
+     * @throws TExceptionCouldNotProcessData
      */
-    public function checksum(string $algorithm = self::CHECKSUM_ALGORITHM): static;
+    public function checksum(?string $algorithm = null): static;
 
     /**
-     * {@see zlib_encode()}/{@see zlib_decode()} the data
+     * @see Coder\zlib
      *
-     * @link https://en.wikipedia.org/wiki/Zlib
-     *
-     * @throws TExceptionCouldNotCodeData
+     * @throws TExceptionCouldNotProcessData
      */
     public function zlib(): static;
 }

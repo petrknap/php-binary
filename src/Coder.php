@@ -4,18 +4,17 @@ declare(strict_types=1);
 
 namespace PetrKnap\Binary;
 
+use PetrKnap\Shorts\Exception;
+
 /**
+ * @internal please use subclass
+ *
  * @phpstan-consistent-constructor override {@see self::create()} if not
  *
- * @implements CoderInterface<Exception\CouldNotCodeData>
+ * @implements CoderInterface<Exception\CouldNotProcessData>
  */
 abstract class Coder implements CoderInterface
 {
-    protected const BASE64_URL_SAFE_MAP = [
-        ['+', '/', '='],
-        ['-', '_', ''],
-    ];
-
     public function __construct(
         protected readonly string $data = '',
     ) {

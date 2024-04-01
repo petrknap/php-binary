@@ -4,51 +4,28 @@ declare(strict_types=1);
 
 namespace PetrKnap\Binary;
 
-use Throwable;
-
 class Decoder extends Coder implements DecoderInterface
 {
     public function base64(): static
     {
-        try {
-            $decoded = base64_decode(
-                str_replace(self::BASE64_URL_SAFE_MAP[1], self::BASE64_URL_SAFE_MAP[0], $this->data),
-                strict: true,
-            );
-            if ($decoded === false) {
-                throw new Exception\CouldNotDecodeData($this, __METHOD__);
-            }
-            return static::create($this, $decoded);
-        } catch (Throwable $reason) {
-            throw new Exception\CouldNotDecodeData($this, __METHOD__, $reason);
-        }
+        return static::create($this, (new Coder\Base64())->decode(
+            $this->data,
+        ));
     }
 
-    public function checksum(string $algorithm = self::CHECKSUM_ALGORITHM): static
+    public function checksum(?string $algorithm = null): static
     {
-        try {
-            $checksumLength = mb_strlen(hash($algorithm, '', binary: true), encoding: '8bit');
-            $dataLength = mb_strlen($this->data, encoding: '8bit') - $checksumLength;
-            $data = mb_strcut($this->data, 0, $dataLength, encoding: '8bit');
-            if ((new Encoder($data))->checksum($algorithm)->getData() !== $this->data) {
-                throw new Exception\CouldNotDecodeData($this, __METHOD__);
-            }
-            return static::create($this, $data);
-        } catch (Throwable $reason) {
-            throw new Exception\CouldNotDecodeData($this, __METHOD__, $reason);
-        }
+        return static::create($this, (new Coder\Checksum())->decode(
+            $this->data,
+            algorithm: $algorithm,
+        ));
     }
 
-    public function zlib(int $maxLength = self::ZLIB_MAX_LENGTH): static
+    public function zlib(?int $maxLength = null): static
     {
-        try {
-            $decoded = zlib_decode($this->data, $maxLength);
-            if ($decoded === false) {
-                throw new Exception\CouldNotDecodeData($this, __METHOD__);
-            }
-            return static::create($this, $decoded);
-        } catch (Throwable $reason) {
-            throw new Exception\CouldNotDecodeData($this, __METHOD__, $reason);
-        }
+        return static::create($this, (new Coder\Zlib())->decode(
+            $this->data,
+            maxLength: $maxLength,
+        ));
     }
 }
