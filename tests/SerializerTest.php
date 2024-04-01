@@ -13,7 +13,7 @@ final class SerializerTest extends TestCase
     private SerializerInterface&MockObject $internalSerializer;
     private Serializer $serializer;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -44,7 +44,7 @@ final class SerializerTest extends TestCase
         };
     }
 
-    public function testSerializesData(): void
+    public static function doTestSerializesData(SerializerInterface $serializer): void
     {
         $data = new stdClass();
         $data->array = [];
@@ -53,10 +53,6 @@ final class SerializerTest extends TestCase
         $data->int = 0;
         $data->null = null;
         $data->string = '';
-        $serializer = new Serializer(
-            new Encoder(),
-            new Decoder(),
-        );
 
         self::assertEquals(
             $data,
@@ -64,6 +60,16 @@ final class SerializerTest extends TestCase
                 $serializer->serialize(
                     $data,
                 ),
+            ),
+        );
+    }
+
+    public function testSerializesData(): void
+    {
+        self::doTestSerializesData(
+            new Serializer(
+                new Encoder(),
+                new Decoder(),
             ),
         );
     }
