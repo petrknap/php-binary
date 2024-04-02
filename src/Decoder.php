@@ -21,6 +21,13 @@ class Decoder extends Coder implements DecoderInterface
         ));
     }
 
+    public function hex(): static
+    {
+        return static::create($this, (new Coder\Hex())->decode(
+            $this->data,
+        ));
+    }
+
     public function zlib(?int $maxLength = null): static
     {
         return static::create($this, (new Coder\Zlib())->decode(

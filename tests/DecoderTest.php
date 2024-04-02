@@ -22,6 +22,14 @@ final class DecoderTest extends TestCase
         );
     }
 
+    public function testDecodesHex(): void
+    {
+        self::assertSame(
+            Coder\HexTest::getDecodedData(),
+            (new Decoder(Coder\HexTest::getEncodedData()))->hex()->getData(),
+        );
+    }
+
     public function testDecodesZlib(): void
     {
         self::assertSame(

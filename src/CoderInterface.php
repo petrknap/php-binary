@@ -32,6 +32,13 @@ interface CoderInterface
     public function checksum(?string $algorithm = null): static;
 
     /**
+     * @see Coder\Hex
+     *
+     * @throws TExceptionCouldNotProcessData
+     */
+    public function hex(): static;
+
+    /**
      * @see Coder\zlib
      *
      * @throws TExceptionCouldNotProcessData
