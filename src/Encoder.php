@@ -22,6 +22,13 @@ class Encoder extends Coder implements EncoderInterface
         ));
     }
 
+    public function hex(): static
+    {
+        return static::create($this, (new Coder\Hex())->encode(
+            $this->data,
+        ));
+    }
+
     public function zlib(?int $encoding = null, ?int $level = null): static
     {
         return static::create($this, (new Coder\Zlib())->encode(
