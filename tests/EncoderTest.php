@@ -2,65 +2,31 @@
 
 namespace PetrKnap\Binary;
 
-use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\TestCase;
 
-final class EncoderTest extends CoderTestCase
+final class EncoderTest extends TestCase
 {
-    #[DataProvider('dataBase64')]
-    public function testEncodesBase64(string $decoded, string $encoded, bool $urlSafe): void
+    public function testEncodesBase64(): void
     {
         self::assertSame(
-            $encoded,
-            (new Encoder($decoded))->base64($urlSafe)->getData(),
+            Coder\Base64Test::getEncodedData(),
+            (new Encoder(Coder\Base64Test::getDecodedData()))->base64()->getData(),
         );
     }
 
-    #[DataProvider('dataChecksum')]
-    public function testEncodesChecksum(string $decoded, string $encoded, string $algorithm): void
+    public function testEncodesChecksum(): void
     {
         self::assertSame(
-            $encoded,
-            (new Encoder($decoded))->checksum($algorithm)->getData(),
+            Coder\ChecksumTest::getEncodedData(),
+            (new Encoder(Coder\ChecksumTest::getDecodedData()))->checksum()->getData(),
         );
     }
 
-    #[DataProvider('dataChecksumThrows')]
-    public function testChecksumThrows(string $algorithm): void
-    {
-        self::expectException(Exception\CouldNotEncodeData::class);
-
-        (new Encoder(''))->checksum($algorithm);
-    }
-
-    public static function dataChecksumThrows(): array
-    {
-        return [
-            'wrong algorithm' => ['?'],
-        ];
-    }
-
-    #[DataProvider('dataZlib')]
-    public function testEncodesZlib(string $decoded, string $encoded, int $encoding, int $level): void
+    public function testEncodesZlib(): void
     {
         self::assertSame(
-            base64_encode($encoded),
-            base64_encode((new Encoder($decoded))->zlib(encoding: $encoding, level: $level)->getData()),
+            Coder\ZlibTest::getEncodedData(),
+            (new Encoder(Coder\ZlibTest::getDecodedData()))->zlib()->getData(),
         );
-    }
-
-    #[DataProvider('dataZlibThrows')]
-    public function testZlibThrows(int $encoding, int $level): void
-    {
-        self::expectException(Exception\CouldNotEncodeData::class);
-
-        (new Encoder('data'))->zlib($encoding, $level);
-    }
-
-    public static function dataZlibThrows(): array
-    {
-        return [
-            'wrong encoding' => [0, EncoderInterface::ZLIB_LEVEL],
-            'wrong level' => [EncoderInterface::ZLIB_ENCODING, -2],
-        ];
     }
 }

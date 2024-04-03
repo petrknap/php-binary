@@ -14,7 +14,7 @@
     "allow-plugins": false,
     "sort-packages": true
   },
-  "description": "Library for work with binaries",
+  "description": "Library for work with binary data and objects",
   "funding": [
     {
       "type": "other",
@@ -23,21 +23,23 @@
   ],
   "homepage": "https://github.com/petrknap/php-binary",
   "keywords": [
-    "binary",
-    "helper",
     "base64",
-    "encoder",
-    "decoder",
+    "binary",
     "checksum",
-    "zlib",
     "compression",
-    "decompression"
+    "decoder",
+    "decompression",
+    "encoder",
+    "helper",
+    "igbinary",
+    "serializer",
+    "zlib"
   ],
   "license": "LGPL-3.0-or-later",
   "name": "petrknap/binary",
   "require": {
-    "petrknap/shorts": "^1.4",
-    "php": ">=8.1"
+    "php": ">=8.1",
+    "petrknap/shorts": "^1.5"
   },
   "require-dev": {
     "ext-mbstring": "*",

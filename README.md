@@ -1,7 +1,7 @@
-# Library for work with binaries
+# Library for work with binary data and objects
 
-Library for basic work with binary data in PHP.
-See the examples below for more information, or check out [`CoderInterface`](./src/CoderInterface.php) and [`SerializerInterface`](./src/SerializerInterface.php).
+Simple library for work with binary data and objects in PHP.
+See the examples below for more information, or check out [`Encoder`](./src/Encoder.php), [`Decoder`](./src/Decoder.php) and [`Serializer`](./src/Serializer.php).
 
 ```php
 use PetrKnap\Binary\Binary;

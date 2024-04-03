@@ -2,84 +2,31 @@
 
 namespace PetrKnap\Binary;
 
-use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\TestCase;
 
-final class DecoderTest extends CoderTestCase
+final class DecoderTest extends TestCase
 {
-    #[DataProvider('dataBase64')]
-    public function testDecodesBase64(string $decoded, string $encoded): void
+    public function testDecodesBase64(): void
     {
         self::assertSame(
-            $decoded,
-            (new Decoder($encoded))->base64()->getData(),
+            Coder\Base64Test::getDecodedData(),
+            (new Decoder(Coder\Base64Test::getEncodedData()))->base64()->getData(),
         );
     }
 
-    #[DataProvider('dataBase64Throws')]
-    public function testBase64Throws(string $data): void
-    {
-        self::expectException(Exception\CouldNotDecodeData::class);
-
-        (new Decoder($data))->base64();
-    }
-
-    public static function dataBase64Throws(): array
-    {
-        return [
-            'wrong data' => ['?'],
-        ];
-    }
-
-    #[DataProvider('dataChecksum')]
-    public function testDecodesChecksum(string $decoded, string $encoded, string $algorithm): void
+    public function testDecodesChecksum(): void
     {
         self::assertSame(
-            $decoded,
-            (new Decoder($encoded))->checksum($algorithm)->getData(),
+            Coder\ChecksumTest::getDecodedData(),
+            (new Decoder(Coder\ChecksumTest::getEncodedData()))->checksum()->getData(),
         );
     }
 
-    #[DataProvider('dataChecksumThrows')]
-    public function testChecksumThrows(string $data, string $algorithm): void
-    {
-        self::expectException(Exception\CouldNotDecodeData::class);
-
-        (new Decoder($data))->checksum($algorithm);
-    }
-
-    public static function dataChecksumThrows(): array
-    {
-        $dataSet = self::dataChecksum()[CoderInterface::CHECKSUM_ALGORITHM];
-        return [
-            'wrong algorithm' => [$dataSet[1], '?'],
-            'short data' => ['?', CoderInterface::CHECKSUM_ALGORITHM],
-            'wrong data' => [$dataSet[0], CoderInterface::CHECKSUM_ALGORITHM],
-            'wrong checksum' => ['?' . $dataSet[1], CoderInterface::CHECKSUM_ALGORITHM],
-        ];
-    }
-
-    #[DataProvider('dataZlib')]
-    public function testDecodesZlib(string $decoded, string $encoded): void
+    public function testDecodesZlib(): void
     {
         self::assertSame(
-            $decoded,
-            (new Decoder($encoded))->zlib()->getData(),
+            Coder\ZlibTest::getDecodedData(),
+            (new Decoder(Coder\ZlibTest::getEncodedData()))->zlib()->getData(),
         );
-    }
-
-    #[DataProvider('dataZlibThrows')]
-    public function testZlibThrows(string $data, int $maxLength): void
-    {
-        self::expectException(Exception\CouldNotDecodeData::class);
-
-        (new Decoder($data))->zlib($maxLength);
-    }
-
-    public static function dataZlibThrows(): array
-    {
-        return [
-            'wrong data' => ['AwA=', DecoderInterface::ZLIB_MAX_LENGTH],
-            'wrong maximal length' => [base64_decode('AwA='), -1],
-        ];
     }
 }

@@ -18,20 +18,11 @@ final class Binary
 
     public static function serialize(mixed $data): string
     {
-        return self::getSerializer()->serialize(serializable: $data);
+        return (new Serializer())->serialize(serializable: $data);
     }
 
     public static function unserialize(string $data): mixed
     {
-        return self::getSerializer()->unserialize(serialized: $data);
-    }
-
-    private static function getSerializer(): Serializer
-    {
-        static $serializer;
-        return $serializer ??= new Serializer(
-            new Encoder(),
-            new Decoder(),
-        );
+        return (new Serializer())->unserialize(serialized: $data);
     }
 }
