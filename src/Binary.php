@@ -25,4 +25,22 @@ final class Binary
     {
         return (new Serializer())->unserialize(serialized: $data);
     }
+
+    /**
+     * @see Byter::bite()
+     *
+     * @return array<string>
+     */
+    public static function bite(string $data, int $size1, int ...$sizeN): array
+    {
+        return (new Byter())->bite($data, $size1, ...$sizeN);
+    }
+
+    /**
+     * @see Byter::unbite()
+     */
+    public static function unbite(string $bite1, string ...$biteN): string
+    {
+        return (new Byter())->unbite($bite1, ...$biteN);
+    }
 }

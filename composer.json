@@ -65,7 +65,7 @@
   },
   "suggest": {
     "ext-igbinary": "Required to serialize data via igbinary",
-    "ext-mbstring": "Required to check checksum",
+    "ext-mbstring": "Required to bite bytes",
     "ext-zlib": "Required to compress data"
   }
 }

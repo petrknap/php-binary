@@ -20,6 +20,7 @@ class ReadmeTest extends TestCase implements MarkdownFileTestInterface
         return [
             'coder' => 'Data was coded into `a8vMFCssyD2Rs5BB0Evt6tJv10J_b2Aoui0tcXT69aaPP9oIyB-fLeAHAA` successfully.',
             'serializer' => 'Data was serialized into `S7QysqoutjKxUiqpLEhVsi62srRSysxNTE/VL8hLB/GBUimJJYkgpoWxlVJngJ87L5cUFwMDA6+nh0sQkGYEYQ42ICkveqQTxCkOcndiWHdO5iVYlYtjiER48o/9Ux7aM7C9Z1qixnnFBCjB4Onq57LOKaFJyboWAA==` successfully.',
+            'byter' => 'Hashes and data was unbitten into `IoPwxcGHZQM0gfF966vHI3kleehoRKHtC32Xh30RDlg5E026hmlpFnFwbchsoQARSibVpfbWVfuwAHLbGxjFl9eC8fiGaWkWcXBtyGyhABFKJtWl9tZV+7AActsbGMWX14Lx+A==` successfully.',
         ];
     }
 }

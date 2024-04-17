@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace PetrKnap\Binary\Coder;
 
-use PetrKnap\Shorts\HasRequirements;
+use PetrKnap\Binary\Byter;
 
 /**
  * @see hash()
@@ -13,20 +13,14 @@ use PetrKnap\Shorts\HasRequirements;
  */
 final class Checksum extends Coder
 {
-    use HasRequirements;
-
     public const ALGORITHM = 'crc32';
 
     private string $algorithm;
+    private readonly Byter $byter;
 
     public function __construct()
     {
-        self::checkRequirements(
-            functions: [
-                'mb_strlen',
-                'mb_strcut',
-            ],
-        );
+        $this->byter = new Byter();
     }
 
     public function encode(string $decoded, ?string $algorithm = null): string
@@ -44,14 +38,13 @@ final class Checksum extends Coder
     protected function doEncode(string $decoded): string
     {
         $checksum = hash($this->algorithm, $decoded, binary: true);
-        return $decoded . $checksum;
+        return $this->byter->unbite($decoded, $checksum);
     }
 
     protected function doDecode(string $encoded): string
     {
-        $checksumLength = mb_strlen(hash($this->algorithm, '', binary: true), encoding: '8bit');
-        $dataLength = mb_strlen($encoded, encoding: '8bit') - $checksumLength;
-        $decoded = mb_strcut($encoded, 0, $dataLength, encoding: '8bit');
+        $checksumLength = $this->byter->size(hash($this->algorithm, '', binary: true));
+        [,$decoded] = $this->byter->bite($encoded, -$checksumLength);
         if ($this->doEncode($decoded) !== $encoded) {
             throw new Exception\CouldNotDecodeData(__METHOD__, $encoded);
         }
