@@ -4,21 +4,25 @@ declare(strict_types=1);
 
 namespace PetrKnap\Binary\Serializer;
 
-use PetrKnap\Binary\HasRequirementsTrait;
 use PetrKnap\Shorts\HasRequirements;
 
 /**
  * @see igbinary_serialize()
  * @see igbinary_unserialize()
  */
-final class Igbinary extends Serializer implements HasRequirements
+final class Igbinary extends Serializer
 {
-    use HasRequirementsTrait;
+    use HasRequirements;
 
-    private const REQUIRED_FUNCTIONS = [
-        'igbinary_serialize',
-        'igbinary_unserialize',
-    ];
+    public function __construct()
+    {
+        self::checkRequirements(
+            functions: [
+                'igbinary_serialize',
+                'igbinary_unserialize',
+            ],
+        );
+    }
 
     protected function doSerialize(mixed $serializable): string
     {
