@@ -4,24 +4,32 @@ declare(strict_types=1);
 
 namespace PetrKnap\Binary\Coder;
 
-use PetrKnap\Binary\HasRequirementsTrait;
 use PetrKnap\Shorts\HasRequirements;
 
 /**
  * @see zlib_encode()
  * @see zlib_decode()
  */
-final class Zlib extends Coder implements HasRequirements
+final class Zlib extends Coder
 {
-    use HasRequirementsTrait;
+    use HasRequirements;
 
     public const ENCODING = ZLIB_ENCODING_RAW;
     public const LEVEL = -1;
     public const MAX_LENGTH = 0;
-    private const REQUIRED_FUNCTIONS = [
-        'zlib_encode',
-        'zlib_decode',
-    ];
+
+    public function __construct()
+    {
+        self::checkRequirements(
+            functions: [
+                'zlib_encode',
+                'zlib_decode',
+            ],
+            constants: [
+                'ZLIB_ENCODING_RAW',
+            ],
+        );
+    }
 
     private int $encoding;
     private int $level;

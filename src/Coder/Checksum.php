@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace PetrKnap\Binary\Coder;
 
-use PetrKnap\Binary\HasRequirementsTrait;
 use PetrKnap\Shorts\HasRequirements;
 
 /**
@@ -12,21 +11,22 @@ use PetrKnap\Shorts\HasRequirements;
  *
  * @link https://en.wikipedia.org/wiki/Checksum
  */
-final class Checksum extends Coder implements HasRequirements
+final class Checksum extends Coder
 {
-    use HasRequirementsTrait;
+    use HasRequirements;
 
     public const ALGORITHM = 'crc32';
-    private const REQUIRED_FUNCTIONS = [
-        'mb_strlen',
-        'mb_strcut',
-    ];
 
     private string $algorithm;
 
     public function __construct()
     {
-        self::checkRequirements();
+        self::checkRequirements(
+            functions: [
+                'mb_strlen',
+                'mb_strcut',
+            ],
+        );
     }
 
     public function encode(string $decoded, ?string $algorithm = null): string
