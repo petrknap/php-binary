@@ -6,21 +6,33 @@ namespace PetrKnap\Binary;
 
 final class Binary
 {
+    /**
+     * @see EncoderInterface
+     */
     public static function encode(string $data): Encoder
     {
         return new Encoder($data);
     }
 
+    /**
+     * @see DecoderInterface
+     */
     public static function decode(string $data): Decoder
     {
         return new Decoder($data);
     }
 
+    /**
+     * @see Serializer::serialize()
+     */
     public static function serialize(mixed $data): string
     {
         return (new Serializer())->serialize(serializable: $data);
     }
 
+    /**
+     * @see Serializer::unserialize()
+     */
     public static function unserialize(string $data): mixed
     {
         return (new Serializer())->unserialize(serialized: $data);
