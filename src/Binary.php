@@ -6,18 +6,12 @@ namespace PetrKnap\Binary;
 
 final class Binary
 {
-    /**
-     * @see EncoderInterface
-     */
-    public static function encode(string $data): Encoder
+    public static function encode(string $data): EncoderInterface
     {
         return new Encoder($data);
     }
 
-    /**
-     * @see DecoderInterface
-     */
-    public static function decode(string $data): Decoder
+    public static function decode(string $data): DecoderInterface
     {
         return new Decoder($data);
     }
