@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace PetrKnap\Binary;
 
-use PetrKnap\Shorts\Exception\NotImplemented;
-
 trait BinariableTrait
 {
     /**
@@ -13,10 +11,7 @@ trait BinariableTrait
      */
     public function __toString(): string
     {
-        if (!($this instanceof BinariableInterface)) {
-            NotImplemented::throw(BinariableInterface::class);
-        }
-
+        /** @var BinariableInterface $this */
         $binary = $this->toBinary();
         trigger_error(
             'Returned binary string',

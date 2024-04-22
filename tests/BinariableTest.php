@@ -8,27 +8,19 @@ use PHPUnit\Framework\TestCase;
 
 final class BinariableTest extends TestCase
 {
-    public const DATA = b'data';
-
-    public function testExplicitConversionWorks(): void
-    {
-        self::assertSame(
-            self::DATA,
-            self::getBinariable()->toBinary(),
-        );
-    }
+    public const BINARY = b'binary';
 
     public function testNativeConversionWorks(): void
     {
         self::assertSame(
-            self::DATA,
-            (string) self::getBinariable(),
+            self::BINARY,
+            (string) self::getInstance(),
         );
     }
 
     public function testNativeComparisonWorks(): void
     {
-        self::assertTrue(self::DATA == self::getBinariable());
+        self::assertTrue(self::BINARY == self::getInstance());
     }
 
     public function testUnionTypingWorks(): void
@@ -36,19 +28,19 @@ final class BinariableTest extends TestCase
         $function = static fn (BinariableInterface|string $parameter): string => (string) $parameter;
 
         self::assertSame(
-            self::DATA,
-            $function(self::getBinariable()),
+            self::BINARY,
+            $function(self::getInstance()),
         );
     }
 
-    private function getBinariable(): BinariableInterface
+    private static function getInstance(): BinariableInterface
     {
         return new class () implements BinariableInterface {
             use BinariableTrait;
 
             public function toBinary(): string
             {
-                return BinariableTest::DATA;
+                return BinariableTest::BINARY;
             }
         };
     }
