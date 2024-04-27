@@ -6,12 +6,6 @@ namespace PetrKnap\Binary;
 
 use Stringable;
 
-interface BinariableInterface extends Stringable
+interface BinariableInterface extends Serializer\OneWaySelfSerializerInterface, Stringable
 {
-    /**
-     * @return string binary representation of this instance
-     *
-     * @throws Exception\CouldNotConvertToBinary
-     */
-    public function toBinary(): string;
 }
