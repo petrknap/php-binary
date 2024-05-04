@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace PetrKnap\Binary\Serializer;
 
-use PetrKnap\Binary\Serializer;
+use PetrKnap\Binary\Binary;
 
 /**
  * If your {@see self::__construct()} argument is an instance of {@see SelfSerializerInterface} then
@@ -19,7 +19,7 @@ trait SelfSerializerTrait
 
     public function toBinary(): string
     {
-        return (new Serializer())->serialize(array_map(
+        return Binary::serialize(array_map(
             static fn (mixed $constructorArg): mixed => match ($constructorArg instanceof SelfSerializerInterface) {
                 true => $constructorArg->toBinary(),
                 false => $constructorArg,
@@ -30,6 +30,6 @@ trait SelfSerializerTrait
 
     public static function fromBinary(string $data): self
     {
-        return new self(...(new Serializer())->unserialize($data));
+        return new self(...Binary::unserialize($data));
     }
 }
