@@ -4,7 +4,7 @@ Simple library for work with binary data and objects in PHP.
 See the examples below for more information, or check out [`Encoder`](./src/Encoder.php), [`Decoder`](./src/Decoder.php), [`Serializer`](./src/Serializer.php) and [`Byter`](./src/Byter.php).
 
 ```php
-use PetrKnap\Binary\Binary;
+namespace PetrKnap\Binary;
 
 $data = base64_decode('hmlpFnFwbchsoQARSibVpfbWVfuwAHLbGxjFl9eC8fiGaWkWcXBtyGyhABFKJtWl9tZV+7AActsbGMWX14Lx+A==');
 $encoded = Binary::encode($data)->checksum()->zlib()->base64(urlSafe: true)->getData();
@@ -14,7 +14,7 @@ printf('Data was coded into `%s` %s.', $encoded, $decoded === $data ? 'successfu
 ```
 
 ```php
-use PetrKnap\Binary\Binary;
+namespace PetrKnap\Binary;
 
 $data = [
     'type' => 'image/png',
@@ -27,7 +27,35 @@ printf('Data was serialized into `%s` %s.', base64_encode($serialized), $unseria
 ```
 
 ```php
-use PetrKnap\Binary\Binary;
+namespace PetrKnap\Binary;
+
+class DataObject implements Serializer\SelfSerializerInterface
+{
+    use Serializer\SelfSerializerTrait;
+    
+    public function __construct(
+        public string $data,
+    ) {
+        $this->referencesToConstructorArgs = [
+            &$this->data,
+        ];
+    }
+}
+
+$instance = new DataObject('Lorem ipsum dolor sit amet, consectetur adipiscing elit.');
+$instance->data .= ' Duis venenatis ultricies elementum.';
+$binary = $instance->toBinary();
+$binaryFromHelper = Binary::toBinary($instance);
+
+printf(
+    'Data object was serialized into `%s` %s.',
+    base64_encode($binary),
+    $binary === $binaryFromHelper && $instance == DataObject::fromBinary($binary) ? 'successfully' : 'unsuccessfully',
+);
+```
+
+```php
+namespace PetrKnap\Binary;
 
 $data = base64_decode('hmlpFnFwbchsoQARSibVpfbWVfuwAHLbGxjFl9eC8fiGaWkWcXBtyGyhABFKJtWl9tZV+7AActsbGMWX14Lx+A==');
 $sha1 = sha1($data, binary: true);
