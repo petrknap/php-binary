@@ -45,7 +45,7 @@ class DataObject implements Serializer\SelfSerializerInterface
 $instance = new DataObject('Lorem ipsum dolor sit amet, consectetur adipiscing elit.');
 $instance->data .= ' Duis venenatis ultricies elementum.';
 $binary = $instance->toBinary();
-$binaryFromHelper = Binary::toBinary($instance);
+$binaryFromHelper = Binary::asBinary($instance);
 
 printf(
     'Data object was serialized into `%s` %s.',

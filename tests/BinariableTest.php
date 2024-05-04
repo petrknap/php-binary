@@ -29,7 +29,7 @@ final class BinariableTest extends TestCase
     {
         self::assertSame(
             self::BINARY,
-            Binary::toBinary($data),
+            Binary::asBinary($data),
         );
     }
 

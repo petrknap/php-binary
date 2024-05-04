@@ -35,7 +35,7 @@ final class Binary
     /**
      * @see Serializer\OneWaySelfSerializerInterface::toBinary()
      */
-    public static function toBinary(Serializer\OneWaySelfSerializerInterface|string $data): string
+    public static function asBinary(Serializer\OneWaySelfSerializerInterface|string $data): string
     {
         if ($data instanceof Serializer\OneWaySelfSerializerInterface) {
             return $data->toBinary();
