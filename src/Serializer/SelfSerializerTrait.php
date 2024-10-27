@@ -8,7 +8,7 @@ use PetrKnap\Binary\Binary;
 
 /**
  * If your {@see self::__construct()} argument is an instance of {@see SelfSerializerInterface} then
- * accept it as an union type `YourClass|string` and call {@see SelfSerializerInterface::fromBinary()} if it is a string.
+ * accept it as a union type `YourClass|string` and call {@see SelfSerializerInterface::fromBinary()} if it is a string.
  */
 trait SelfSerializerTrait
 {
