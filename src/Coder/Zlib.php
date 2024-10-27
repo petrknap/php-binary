@@ -18,6 +18,10 @@ final class Zlib extends Coder
     public const LEVEL = -1;
     public const MAX_LENGTH = 0;
 
+    private int $encoding;
+    private int $level;
+    private int $maxLength;
+
     public function __construct()
     {
         self::checkRequirements(
@@ -30,10 +34,6 @@ final class Zlib extends Coder
             ],
         );
     }
-
-    private int $encoding;
-    private int $level;
-    private int $maxLength;
 
     public function encode(string $decoded, ?int $encoding = null, ?int $level = null): string
     {
