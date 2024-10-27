@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace PetrKnap\Binary;
 
+/**
+ * @psalm-require-implements BinariableInterface
+ */
 trait BinariableTrait
 {
     /**
@@ -11,7 +14,6 @@ trait BinariableTrait
      */
     public function __toString(): string
     {
-        /** @var BinariableInterface $this */
         $binary = $this->toBinary();
         trigger_error(
             'Returned binary string',
