@@ -52,13 +52,6 @@
   },
   "scripts": {
     "test": "phpunit --colors=always --testdox tests",
-    "validate": [
-      "composer outdated \"petrknap/*\" --major-only --strict --ansi --no-interaction",
-      "phpcs --colors --standard=PSR12 --exclude=Generic.Files.LineLength src tests",
-      "phpstan analyse --level max src",
-      "phpstan analyse --level 5 tests",
-      "phpinsights analyse src --ansi --no-interaction"
-    ],
     "ci-script": [
       "@check-implementation",
       "@check-requirements",
