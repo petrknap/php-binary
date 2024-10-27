@@ -21,7 +21,7 @@ final class Binary
      */
     public static function serialize(mixed $data): string
     {
-        return (new Serializer())->serialize(serializable: $data);
+        return self::serializer()->serialize(serializable: $data);
     }
 
     /**
@@ -29,7 +29,18 @@ final class Binary
      */
     public static function unserialize(string $data): mixed
     {
-        return (new Serializer())->unserialize(serialized: $data);
+        return self::serializer()->unserialize(serialized: $data);
+    }
+
+    /**
+     * @see Serializer\OneWaySelfSerializerInterface::toBinary()
+     */
+    public static function asBinary(Serializer\OneWaySelfSerializerInterface|string $data): string
+    {
+        if ($data instanceof Serializer\OneWaySelfSerializerInterface) {
+            return $data->toBinary();
+        }
+        return $data;
     }
 
     /**
@@ -39,7 +50,7 @@ final class Binary
      */
     public static function bite(string $data, int $size1, int ...$sizeN): array
     {
-        return (new Byter())->bite($data, $size1, ...$sizeN);
+        return self::byter()->bite($data, $size1, ...$sizeN);
     }
 
     /**
@@ -47,6 +58,18 @@ final class Binary
      */
     public static function unbite(string $bite1, string ...$biteN): string
     {
-        return (new Byter())->unbite($bite1, ...$biteN);
+        return self::byter()->unbite($bite1, ...$biteN);
+    }
+
+    private static function serializer(): Serializer
+    {
+        static $serializer;
+        return $serializer ??= new Serializer();
+    }
+
+    private static function byter(): Byter
+    {
+        static $byter;
+        return $byter ??= new Byter();
     }
 }

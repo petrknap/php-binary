@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace PetrKnap\Binary;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 final class BinariableTest extends TestCase
@@ -23,14 +24,22 @@ final class BinariableTest extends TestCase
         self::assertTrue(self::BINARY == self::getInstance());
     }
 
-    public function testUnionTypingWorks(): void
+    #[DataProvider('unionTypeDataProvider')]
+    public function testConversionHelperWorks(BinariableInterface|string $data): void
     {
-        $function = static fn (BinariableInterface|string $parameter): string => (string) $parameter;
-
         self::assertSame(
             self::BINARY,
-            $function(self::getInstance()),
+            Binary::asBinary($data),
         );
+    }
+
+    public static function unionTypeDataProvider(): array
+    {
+        $instance = self::getInstance();
+        return [
+            BinariableInterface::class => [$instance],
+            'binary' => [$instance->toBinary()],
+        ];
     }
 
     private static function getInstance(): BinariableInterface
