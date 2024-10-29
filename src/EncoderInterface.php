@@ -9,7 +9,7 @@ namespace PetrKnap\Binary;
  */
 interface EncoderInterface extends CoderInterface
 {
-    public function base64(?bool $urlSafe = null): static;
+    public function base64(bool|null $urlSafe = null): static;
 
-    public function zlib(?int $encoding = null, ?int $level = null): static;
+    public function zlib(int|null $encoding = null, int|null $level = null): static;
 }

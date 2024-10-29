@@ -12,8 +12,6 @@ use PetrKnap\Optional\OptionalString;
  */
 final class Base64 extends Coder
 {
-    public const URL_SAFE = false;
-
     private const URL_REPLACE_TABLE = [
         ['+', '/', '='],
         ['-', '_', ''],
@@ -21,9 +19,9 @@ final class Base64 extends Coder
 
     private bool $urlSafe;
 
-    public function encode(string $decoded, ?bool $urlSafe = null): string
+    public function encode(string $decoded, bool|null $urlSafe = null): string
     {
-        $this->urlSafe = $urlSafe ?? self::URL_SAFE;
+        $this->urlSafe = $urlSafe ?? false;
         return parent::encode($decoded);
     }
 

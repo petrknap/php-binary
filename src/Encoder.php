@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace PetrKnap\Binary;
 
-class Encoder extends Coder implements EncoderInterface
+final class Encoder extends Coder implements EncoderInterface
 {
-    public function base64(?bool $urlSafe = null): static
+    public function base64(bool|null $urlSafe = null): static
     {
         return static::create($this, (new Coder\Base64())->encode(
             $this->data,
@@ -14,7 +14,7 @@ class Encoder extends Coder implements EncoderInterface
         ));
     }
 
-    public function checksum(?string $algorithm = null): static
+    public function checksum(string|null $algorithm = null): static
     {
         return static::create($this, (new Coder\Checksum())->encode(
             $this->data,
@@ -29,7 +29,7 @@ class Encoder extends Coder implements EncoderInterface
         ));
     }
 
-    public function zlib(?int $encoding = null, ?int $level = null): static
+    public function zlib(int|null $encoding = null, int|null $level = null): static
     {
         return static::create($this, (new Coder\Zlib())->encode(
             $this->data,

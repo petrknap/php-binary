@@ -7,7 +7,7 @@ namespace PetrKnap\Binary;
 use PetrKnap\Shorts\Exception;
 
 /**
- * @internal please use subinterface
+ * @internal please use sub-interface
  *
  * @template TExceptionCouldNotProcessData of Exception\CouldNotProcessData
  */
@@ -29,7 +29,7 @@ interface CoderInterface
      *
      * @throws TExceptionCouldNotProcessData
      */
-    public function checksum(?string $algorithm = null): static;
+    public function checksum(string|null $algorithm = null): static;
 
     /**
      * @see Coder\Hex

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace PetrKnap\Binary;
 
-class Decoder extends Coder implements DecoderInterface
+final class Decoder extends Coder implements DecoderInterface
 {
     public function base64(): static
     {
@@ -13,7 +13,7 @@ class Decoder extends Coder implements DecoderInterface
         ));
     }
 
-    public function checksum(?string $algorithm = null): static
+    public function checksum(string|null $algorithm = null): static
     {
         return static::create($this, (new Coder\Checksum())->decode(
             $this->data,
@@ -28,7 +28,7 @@ class Decoder extends Coder implements DecoderInterface
         ));
     }
 
-    public function zlib(?int $maxLength = null): static
+    public function zlib(int|null $maxLength = null): static
     {
         return static::create($this, (new Coder\Zlib())->decode(
             $this->data,
