@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace PetrKnap\Binary;
 
-class Encoder extends Coder implements EncoderInterface
+final class Encoder extends Coder implements EncoderInterface
 {
     public function base64(bool|null $urlSafe = null): static
     {

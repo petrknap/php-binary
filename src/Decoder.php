@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace PetrKnap\Binary;
 
-class Decoder extends Coder implements DecoderInterface
+final class Decoder extends Coder implements DecoderInterface
 {
     public function base64(): static
     {

@@ -8,7 +8,7 @@ namespace PetrKnap\Binary;
  * @see Coder\Zlib
  * @see Serializer\Php
  */
-class Serializer extends Serializer\Serializer
+final class Serializer extends Serializer\Serializer
 {
     protected readonly Coder\CoderInterface $coder;
     protected readonly Serializer\SerializerInterface $serializer;

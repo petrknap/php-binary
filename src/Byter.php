@@ -7,7 +7,7 @@ namespace PetrKnap\Binary;
 use PetrKnap\Shorts\HasRequirements;
 use RuntimeException;
 
-class Byter
+final class Byter
 {
     use HasRequirements;
 
