@@ -75,9 +75,9 @@ final class ChecksumTest extends CoderTestCase
     {
         return [
             'wrong algorithm' => [self::getEncodedData(), '?'],
-            'short data' => ['?', Checksum::ALGORITHM],
-            'wrong data' => [self::getDecodedData(), Checksum::ALGORITHM],
-            'wrong checksum' => ['?' . self::getEncodedData(), Checksum::ALGORITHM],
+            'short data' => ['?', Checksum::DEFAULT_ALGORITHM],
+            'wrong data' => [self::getDecodedData(), Checksum::DEFAULT_ALGORITHM],
+            'wrong checksum' => ['?' . self::getEncodedData(), Checksum::DEFAULT_ALGORITHM],
         ];
     }
 

@@ -7,7 +7,7 @@ namespace PetrKnap\Binary;
 use PetrKnap\Shorts\Exception;
 
 /**
- * @internal please use subinterface
+ * @internal please use sub-interface
  *
  * @template TExceptionCouldNotProcessData of Exception\CouldNotProcessData
  */
