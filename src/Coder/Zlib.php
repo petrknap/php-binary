@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace PetrKnap\Binary\Coder;
 
+use PetrKnap\Optional\OptionalString;
 use PetrKnap\Shorts\HasRequirements;
 
 /**
@@ -50,19 +51,15 @@ final class Zlib extends Coder
 
     protected function doEncode(string $decoded): string
     {
-        $encoded = zlib_encode($decoded, $this->encoding, $this->level);
-        if ($encoded === false) {
-            throw new Exception\CouldNotEncodeData(__METHOD__, $decoded);
-        }
-        return $encoded;
+        return OptionalString::ofFalsable(zlib_encode($decoded, $this->encoding, $this->level))->orElseThrow(
+            static fn () => new Exception\CouldNotEncodeData(__METHOD__, $decoded),
+        );
     }
 
     protected function doDecode(string $encoded): string
     {
-        $decoded = zlib_decode($encoded, $this->maxLength);
-        if ($decoded === false) {
-            throw new Exception\CouldNotDecodeData(__METHOD__, $encoded);
-        }
-        return $decoded;
+        return OptionalString::ofFalsable(zlib_decode($encoded, $this->maxLength))->orElseThrow(
+            static fn () => new Exception\CouldNotDecodeData(__METHOD__, $encoded),
+        );
     }
 }

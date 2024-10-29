@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace PetrKnap\Binary\Coder;
 
+use PetrKnap\Optional\OptionalString;
+
 /**
  * @see bin2hex()
  * @see hex2bin()
@@ -17,10 +19,8 @@ final class Hex extends Coder
 
     protected function doDecode(string $encoded): string
     {
-        $decoded = hex2bin($encoded);
-        if ($decoded === false) {
-            throw new Exception\CouldNotDecodeData(__METHOD__, $encoded);
-        }
-        return $decoded;
+        return OptionalString::ofFalsable(hex2bin($encoded))->orElseThrow(
+            static fn () => new Exception\CouldNotDecodeData(__METHOD__, $encoded),
+        );
     }
 }
