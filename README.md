@@ -7,8 +7,8 @@ See the examples below for more information, or check out [`Encoder`](./src/Enco
 namespace PetrKnap\Binary;
 
 $data = base64_decode('hmlpFnFwbchsoQARSibVpfbWVfuwAHLbGxjFl9eC8fiGaWkWcXBtyGyhABFKJtWl9tZV+7AActsbGMWX14Lx+A==');
-$encoded = Binary::encode($data)->checksum()->zlib()->base64(urlSafe: true)->getData();
-$decoded = Binary::decode($encoded)->base64()->zlib()->checksum()->getData();
+$encoded = Binary::encode($data)->checksum()->zlib()->base64(urlSafe: true)->data;
+$decoded = Binary::decode($encoded)->base64()->zlib()->checksum()->data;
 
 printf('Data was coded into `%s` %s.', $encoded, $decoded === $data ? 'successfully' : 'unsuccessfully');
 ```

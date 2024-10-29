@@ -9,7 +9,7 @@ interface SelfSerializerInterface extends OneWaySelfSerializerInterface
     /**
      * @param string $data binary representation of an instance
      *
-     * @throws Exception\CouldNotUnserializeData
+     * @throws Exception\SerializerCouldNotUnserializeData
      */
     public static function fromBinary(string $data): self;
 }

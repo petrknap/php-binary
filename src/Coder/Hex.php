@@ -20,7 +20,7 @@ final class Hex extends Coder
     protected function doDecode(string $encoded): string
     {
         return OptionalString::ofFalsable(hex2bin($encoded))->orElseThrow(
-            static fn () => new Exception\CouldNotDecodeData(__METHOD__, $encoded),
+            static fn () => new Exception\CoderCouldNotDecodeData(__METHOD__, $encoded),
         );
     }
 }

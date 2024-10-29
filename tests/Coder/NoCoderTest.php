@@ -16,7 +16,7 @@ final class NoCoderTest extends CoderTestCase
     #[DataProvider('data')]
     public function testEncodes(string $data): void
     {
-        self::assertSame(
+        self::assertBinarySame(
             $data,
             (new NoCoder())->encode($data),
         );
@@ -25,7 +25,7 @@ final class NoCoderTest extends CoderTestCase
     #[DataProvider('data')]
     public function testDecodes(string $data): void
     {
-        self::assertSame(
+        self::assertBinarySame(
             $data,
             (new NoCoder())->decode($data),
         );

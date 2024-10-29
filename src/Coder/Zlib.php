@@ -15,13 +15,9 @@ final class Zlib extends Coder
 {
     use HasRequirements;
 
-    public const ENCODING = ZLIB_ENCODING_RAW;
-    public const LEVEL = -1;
-    public const MAX_LENGTH = 0;
-
     private int $encoding;
-    private int $level;
-    private int $maxLength;
+    private int|null $level;
+    private int|null $maxLength;
 
     public function __construct()
     {
@@ -36,30 +32,43 @@ final class Zlib extends Coder
         );
     }
 
-    public function encode(string $decoded, ?int $encoding = null, ?int $level = null): string
+    public function encode(string $decoded, int|null $encoding = null, int|null $level = null): string
     {
-        $this->encoding = $encoding ?? self::ENCODING;
-        $this->level = $level ?? self::LEVEL;
+        $this->encoding = $encoding ?? ZLIB_ENCODING_RAW;
+        $this->level = $level;
         return parent::encode($decoded);
     }
 
-    public function decode(string $encoded, ?int $maxLength = null): string
+    public function decode(string $encoded, int|null $maxLength = null): string
     {
-        $this->maxLength = $maxLength ?? self::MAX_LENGTH;
+        $this->maxLength = $maxLength;
         return parent::decode($encoded);
     }
 
     protected function doEncode(string $decoded): string
     {
-        return OptionalString::ofFalsable(zlib_encode($decoded, $this->encoding, $this->level))->orElseThrow(
-            static fn () => new Exception\CouldNotEncodeData(__METHOD__, $decoded),
+        $encodeArgs = [
+            'data' => $decoded,
+            'encoding' => $this->encoding,
+        ];
+        if ($this->level !== null) {
+            $encodeArgs['level'] = $this->level;
+        }
+        return OptionalString::ofFalsable(zlib_encode(...$encodeArgs))->orElseThrow(
+            static fn () => new Exception\CoderCouldNotEncodeData(__METHOD__, $decoded),
         );
     }
 
     protected function doDecode(string $encoded): string
     {
-        return OptionalString::ofFalsable(zlib_decode($encoded, $this->maxLength))->orElseThrow(
-            static fn () => new Exception\CouldNotDecodeData(__METHOD__, $encoded),
+        $decodeArgs = [
+            'data' => $encoded,
+        ];
+        if ($this->maxLength !== null) {
+            $decodeArgs['max_length'] = $this->maxLength;
+        }
+        return OptionalString::ofFalsable(zlib_decode(...$decodeArgs))->orElseThrow(
+            static fn () => new Exception\CoderCouldNotDecodeData(__METHOD__, $encoded),
         );
     }
 }
