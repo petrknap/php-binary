@@ -16,8 +16,8 @@ final class Zlib extends Coder
     use HasRequirements;
 
     private int $encoding;
-    private ?int $level;
-    private ?int $maxLength;
+    private int|null $level;
+    private int|null $maxLength;
 
     public function __construct()
     {
@@ -32,14 +32,14 @@ final class Zlib extends Coder
         );
     }
 
-    public function encode(string $decoded, ?int $encoding = null, ?int $level = null): string
+    public function encode(string $decoded, int|null $encoding = null, int|null $level = null): string
     {
         $this->encoding = $encoding ?? ZLIB_ENCODING_RAW;
         $this->level = $level;
         return parent::encode($decoded);
     }
 
-    public function decode(string $encoded, ?int $maxLength = null): string
+    public function decode(string $encoded, int|null $maxLength = null): string
     {
         $this->maxLength = $maxLength;
         return parent::decode($encoded);

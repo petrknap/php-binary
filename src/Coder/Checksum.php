@@ -26,13 +26,13 @@ final class Checksum extends Coder
         $this->byter = new Byter();
     }
 
-    public function encode(string $decoded, ?string $algorithm = null): string
+    public function encode(string $decoded, string|null $algorithm = null): string
     {
         $this->algorithm = $algorithm ?? self::DEFAULT_ALGORITHM;
         return parent::encode($decoded);
     }
 
-    public function decode(string $encoded, ?string $algorithm = null): string
+    public function decode(string $encoded, string|null $algorithm = null): string
     {
         $this->algorithm = $algorithm ?? self::DEFAULT_ALGORITHM;
         return parent::decode($encoded);

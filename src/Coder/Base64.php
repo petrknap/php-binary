@@ -19,7 +19,7 @@ final class Base64 extends Coder
 
     private bool $urlSafe;
 
-    public function encode(string $decoded, ?bool $urlSafe = null): string
+    public function encode(string $decoded, bool|null $urlSafe = null): string
     {
         $this->urlSafe = $urlSafe ?? false;
         return parent::encode($decoded);

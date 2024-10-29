@@ -29,7 +29,7 @@ interface CoderInterface
      *
      * @throws TExceptionCouldNotProcessData
      */
-    public function checksum(?string $algorithm = null): static;
+    public function checksum(string|null $algorithm = null): static;
 
     /**
      * @see Coder\Hex

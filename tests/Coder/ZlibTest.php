@@ -32,7 +32,7 @@ final class ZlibTest extends CoderTestCase
     }
 
     #[DataProvider('dataEncodeThrows')]
-    public function testEncodeThrows(?int $encoding, ?int $level): void
+    public function testEncodeThrows(int|null $encoding, int|null $level): void
     {
         self::expectException(Exception\CouldNotEncodeData::class);
 
@@ -63,7 +63,7 @@ final class ZlibTest extends CoderTestCase
     }
 
     #[DataProvider('dataDecodeThrows')]
-    public function testDecodeThrows(string $data, ?int $maxLength): void
+    public function testDecodeThrows(string $data, int|null $maxLength): void
     {
         self::expectException(Exception\CouldNotDecodeData::class);
 

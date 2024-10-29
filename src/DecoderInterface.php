@@ -9,5 +9,5 @@ namespace PetrKnap\Binary;
  */
 interface DecoderInterface extends CoderInterface
 {
-    public function zlib(?int $maxLength = null): static;
+    public function zlib(int|null $maxLength = null): static;
 }
