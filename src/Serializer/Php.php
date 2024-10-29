@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace PetrKnap\Binary\Serializer;
 
+use PetrKnap\Optional\Optional;
+
 /**
  * @see serialize()
  * @see unserialize()
@@ -17,10 +19,8 @@ final class Php extends Serializer
 
     protected function doUnserialize(string $serialized): mixed
     {
-        $serializable = unserialize($serialized);
-        if ($serializable === false) {
-            throw throw new Exception\CouldNotUnserializeData(__METHOD__, $serialized);
-        }
-        return $serializable;
+        return Optional::ofFalsable(unserialize($serialized))->orElseThrow(
+            static fn () => new Exception\CouldNotUnserializeData(__METHOD__, $serialized),
+        );
     }
 }
