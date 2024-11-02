@@ -7,12 +7,12 @@ namespace PetrKnap\Binary\Coder;
 interface CoderInterface
 {
     /**
-     * @throws Exception\CouldNotEncodeData
+     * @throws Exception\CoderCouldNotEncodeData
      */
     public function encode(string $decoded): string;
 
     /**
-     * @throws Exception\CouldNotDecodeData
+     * @throws Exception\CoderCouldNotDecodeData
      */
     public function decode(string $encoded): string;
 }

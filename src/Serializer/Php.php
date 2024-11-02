@@ -20,7 +20,7 @@ final class Php extends Serializer
     protected function doUnserialize(string $serialized): mixed
     {
         return Optional::ofFalsable(unserialize($serialized))->orElseThrow(
-            static fn () => new Exception\CouldNotUnserializeData(__METHOD__, $serialized),
+            static fn () => new Exception\SerializerCouldNotUnserializeData(__METHOD__, $serialized),
         );
     }
 }

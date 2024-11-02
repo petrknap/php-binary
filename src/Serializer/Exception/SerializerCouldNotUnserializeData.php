@@ -9,6 +9,6 @@ use PetrKnap\Shorts\Exception\CouldNotProcessData;
 /**
  * @extends CouldNotProcessData<string>
  */
-final class CouldNotUnserializeData extends CouldNotProcessData implements SerializerException
+final class SerializerCouldNotUnserializeData extends CouldNotProcessData implements SerializerException
 {
 }

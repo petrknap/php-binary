@@ -6,17 +6,19 @@ namespace PetrKnap\Binary\Serializer;
 
 use Throwable;
 
+/**
+ * @internal shared logic
+ */
 abstract class Serializer implements SerializerInterface
 {
     public function serialize(mixed $serializable): string
     {
         try {
             return $this->doSerialize($serializable);
+        } catch (Exception\SerializerCouldNotSerializeData $exception) {
+            throw $exception;
         } catch (Throwable $reason) {
-            if ($reason instanceof Exception\CouldNotSerializeData) {
-                throw $reason;
-            }
-            throw new Exception\CouldNotSerializeData(__METHOD__, $serializable, $reason);
+            throw new Exception\SerializerCouldNotSerializeData(__METHOD__, $serializable, $reason);
         }
     }
 
@@ -24,11 +26,10 @@ abstract class Serializer implements SerializerInterface
     {
         try {
             return $this->doUnserialize($serialized);
+        } catch (Exception\SerializerCouldNotUnserializeData $exception) {
+            throw $exception;
         } catch (Throwable $reason) {
-            if ($reason instanceof Exception\CouldNotUnserializeData) {
-                throw $reason;
-            }
-            throw new Exception\CouldNotUnserializeData(__METHOD__, $serialized, $reason);
+            throw new Exception\SerializerCouldNotUnserializeData(__METHOD__, $serialized, $reason);
         }
     }
 

@@ -20,7 +20,7 @@ final class Base64Test extends CoderTestCase
     #[DataProvider('data')]
     public function testEncodes(string $decoded, string $encoded, bool $urlSafe): void
     {
-        self::assertSame(
+        self::assertBinarySame(
             $encoded,
             (new Base64())->encode(
                 $decoded,
@@ -32,7 +32,7 @@ final class Base64Test extends CoderTestCase
     #[DataProvider('data')]
     public function testDecodes(string $decoded, string $encoded): void
     {
-        self::assertSame(
+        self::assertBinarySame(
             $decoded,
             (new Base64())->decode(
                 $encoded,
@@ -43,7 +43,7 @@ final class Base64Test extends CoderTestCase
     #[DataProvider('dataDecodeThrows')]
     public function testDecodeThrows(string $data): void
     {
-        self::expectException(Exception\CouldNotDecodeData::class);
+        self::expectException(Exception\CoderCouldNotDecodeData::class);
 
         (new Base64())->decode(
             $data,

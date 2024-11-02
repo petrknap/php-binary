@@ -7,12 +7,12 @@ namespace PetrKnap\Binary\Serializer;
 interface SerializerInterface
 {
     /**
-     * @throws Exception\CouldNotSerializeData
+     * @throws Exception\SerializerCouldNotSerializeData
      */
     public function serialize(mixed $serializable): string;
 
     /**
-     * @throws Exception\CouldNotUnserializeData
+     * @throws Exception\SerializerCouldNotUnserializeData
      */
     public function unserialize(string $serialized): mixed;
 }

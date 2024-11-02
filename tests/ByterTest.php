@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace PetrKnap\Binary;
 
 use PHPUnit\Framework\Attributes\DataProvider;
-use PHPUnit\Framework\TestCase;
 
 final class ByterTest extends TestCase
 {
@@ -31,7 +30,7 @@ final class ByterTest extends TestCase
 
     public function testBiteThrowsWhenThereIsNotEnoughData(): void
     {
-        self::expectException(Exception\CouldNotBiteData::class);
+        self::expectException(Exception\ByterCouldNotBiteData::class);
 
         $data = self::getData();
         $byter = new Byter();
@@ -43,7 +42,7 @@ final class ByterTest extends TestCase
 
     public function testUnbitesBites(): void
     {
-        self::assertSame(
+        self::assertBinarySame(
             self::getData(),
             (new Byter())->unbite(hex2bin('0102'), hex2bin('030405')),
         );
