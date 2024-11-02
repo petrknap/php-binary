@@ -29,6 +29,14 @@ final class Encoder extends Coder
         ));
     }
 
+    public function xz(int|null $compressionPreset = null): static
+    {
+        return $this->withData((new Coder\Xz())->encode(
+            $this->data,
+            compressionPreset: $compressionPreset,
+        ));
+    }
+
     public function zlib(int|null $encoding = null, int|null $level = null): static
     {
         return $this->withData((new Coder\Zlib())->encode(

@@ -30,6 +30,14 @@ final class EncoderTest extends TestCase
         );
     }
 
+    public function testEncodesXz(): void
+    {
+        self::assertBinarySame(
+            Coder\XzTest::getEncodedData(),
+            (new Encoder(Coder\XzTest::getDecodedData()))->xz()->data,
+        );
+    }
+
     public function testEncodesZlib(): void
     {
         self::assertBinarySame(

@@ -49,6 +49,13 @@ abstract class Coder
     abstract public function hex(): static;
 
     /**
+     * @see Coder\Xz
+     *
+     * @throws Coder\Exception\CoderException
+     */
+    abstract public function xz(): static;
+
+    /**
      * @see Coder\zlib
      *
      * @throws Coder\Exception\CoderException

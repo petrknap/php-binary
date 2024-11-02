@@ -28,6 +28,13 @@ final class Decoder extends Coder
         ));
     }
 
+    public function xz(): static
+    {
+        return $this->withData((new Coder\Xz())->decode(
+            $this->data,
+        ));
+    }
+
     public function zlib(int|null $maxLength = null): static
     {
         return $this->withData((new Coder\Zlib())->decode(
