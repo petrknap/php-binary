@@ -13,7 +13,10 @@ use PetrKnap\Binary\Byter;
  */
 final class Checksum extends Coder
 {
-    public const ALGORITHM = 'crc32';
+    /**
+     * @internal public for testing purposes only
+     */
+    public const DEFAULT_ALGORITHM = 'crc32';
 
     private string $algorithm;
     private readonly Byter $byter;
@@ -23,15 +26,15 @@ final class Checksum extends Coder
         $this->byter = new Byter();
     }
 
-    public function encode(string $decoded, ?string $algorithm = null): string
+    public function encode(string $decoded, string|null $algorithm = null): string
     {
-        $this->algorithm = $algorithm ?? self::ALGORITHM;
+        $this->algorithm = $algorithm ?? self::DEFAULT_ALGORITHM;
         return parent::encode($decoded);
     }
 
-    public function decode(string $encoded, ?string $algorithm = null): string
+    public function decode(string $encoded, string|null $algorithm = null): string
     {
-        $this->algorithm = $algorithm ?? self::ALGORITHM;
+        $this->algorithm = $algorithm ?? self::DEFAULT_ALGORITHM;
         return parent::decode($encoded);
     }
 
@@ -46,7 +49,7 @@ final class Checksum extends Coder
         $checksumLength = $this->byter->size(hash($this->algorithm, '', binary: true));
         [,$decoded] = $this->byter->bite($encoded, -$checksumLength);
         if ($this->doEncode($decoded) !== $encoded) {
-            throw new Exception\CouldNotDecodeData(__METHOD__, $encoded);
+            throw new Exception\CoderCouldNotDecodeData(__METHOD__, $encoded);
         }
         return $decoded;
     }

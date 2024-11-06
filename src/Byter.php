@@ -7,7 +7,7 @@ namespace PetrKnap\Binary;
 use PetrKnap\Shorts\HasRequirements;
 use RuntimeException;
 
-class Byter
+final class Byter
 {
     use HasRequirements;
 
@@ -28,7 +28,7 @@ class Byter
      *
      * @return array<string> bites of specified sizes; and remains, if any
      *
-     * @throws Exception\CouldNotBiteData
+     * @throws Exception\ByterCouldNotBiteData
      */
     public function bite(string $data, int $size1, int ...$sizeN): array
     {
@@ -36,7 +36,7 @@ class Byter
         $bites = [];
         foreach ([$size1, ...$sizeN] as $size) {
             if (abs($size) > $this->size($remains)) {
-                throw new Exception\CouldNotBiteData(__METHOD__, $data, new RuntimeException(
+                throw new Exception\ByterCouldNotBiteData(__METHOD__, $data, new RuntimeException(
                     'Remains are smaller than bite',
                 ));
             }

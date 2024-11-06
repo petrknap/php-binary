@@ -22,9 +22,9 @@ final class ZlibTest extends CoderTestCase
     #[DataProvider('data')]
     public function testEncodes(string $decoded, string $encoded, int $encoding): void
     {
-        self::assertSame(
+        self::assertBinarySame(
             $encoded,
-            self::getZlib()->encode(
+            (new Zlib())->encode(
                 $decoded,
                 encoding: $encoding,
             ),
@@ -32,11 +32,11 @@ final class ZlibTest extends CoderTestCase
     }
 
     #[DataProvider('dataEncodeThrows')]
-    public function testEncodeThrows(?int $encoding, ?int $level): void
+    public function testEncodeThrows(int|null $encoding, int|null $level): void
     {
-        self::expectException(Exception\CouldNotEncodeData::class);
+        self::expectException(Exception\CoderCouldNotEncodeData::class);
 
-        self::getZlib()->encode(
+        (new Zlib())->encode(
             self::getDecodedData(),
             encoding: $encoding,
             level: $level,
@@ -54,20 +54,20 @@ final class ZlibTest extends CoderTestCase
     #[DataProvider('data')]
     public function testDecodes(string $decoded, string $encoded): void
     {
-        self::assertSame(
+        self::assertBinarySame(
             $decoded,
-            self::getZlib()->decode(
+            (new Zlib())->decode(
                 $encoded,
             ),
         );
     }
 
     #[DataProvider('dataDecodeThrows')]
-    public function testDecodeThrows(string $data, ?int $maxLength): void
+    public function testDecodeThrows(string $data, int|null $maxLength): void
     {
-        self::expectException(Exception\CouldNotDecodeData::class);
+        self::expectException(Exception\CoderCouldNotDecodeData::class);
 
-        self::getZlib()->decode(
+        (new Zlib())->decode(
             $data,
             maxLength: $maxLength,
         );
@@ -79,14 +79,5 @@ final class ZlibTest extends CoderTestCase
             'wrong data' => ['AwA=', null],
             'wrong maximal length' => [base64_decode('AwA='), -1],
         ];
-    }
-
-    private static function getZlib(): Zlib
-    {
-        try {
-            return new Zlib();
-        } catch (MissingRequirement $reason) {
-            self::markTestSkipped($reason->getMessage());
-        }
     }
 }

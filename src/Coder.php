@@ -4,34 +4,61 @@ declare(strict_types=1);
 
 namespace PetrKnap\Binary;
 
-use PetrKnap\Shorts\Exception;
-
 /**
- * @internal please use subclass
- *
- * @phpstan-consistent-constructor override {@see self::create()} if not
- *
- * @implements CoderInterface<Exception\CouldNotProcessData>
+ * @internal shared logic
  */
-abstract class Coder implements CoderInterface
+abstract class Coder
 {
-    public function __construct(
-        protected readonly string $data = '',
+    final public function __construct(
+        public readonly string $data = '',
     ) {
     }
 
-    public function withData(string $data): static
+    final public function withData(string $data): static
     {
-        return static::create($this, $data);
+        return new static($data);
     }
 
-    public function getData(): string
+    /**
+     * @deprecated use readonly property $data
+     */
+    final public function getData(): string
     {
         return $this->data;
     }
 
-    protected static function create(self $coder, string $data): static
-    {
-        return new static($data);
-    }
+    /**
+     * @see Coder\Base64
+     *
+     * @throws Coder\Exception\CoderException
+     */
+    abstract public function base64(): static;
+
+    /**
+     * @see Coder\Checksum
+     *
+     * @throws Coder\Exception\CoderException
+     */
+    abstract public function checksum(string|null $algorithm = null): static;
+
+    /**
+     * @see Coder\Hex
+     *
+     * @throws Coder\Exception\CoderException
+     */
+    abstract public function hex(): static;
+
+    /**
+     * @see Coder\Xz
+     *
+     * @throws Coder\Exception\CoderException
+     */
+    abstract public function xz(): static;
+
+    /**
+     * @see Coder\zlib
+     *
+     * @throws Coder\Exception\CoderException
+     */
+    abstract public function zlib(): static;
 }

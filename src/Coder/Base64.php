@@ -4,13 +4,14 @@ declare(strict_types=1);
 
 namespace PetrKnap\Binary\Coder;
 
+use PetrKnap\Optional\OptionalString;
+
 /**
  * @see base64_encode()
  * @see base64_decode()
  */
 final class Base64 extends Coder
 {
-    public const URL_SAFE = false;
     private const URL_REPLACE_TABLE = [
         ['+', '/', '='],
         ['-', '_', ''],
@@ -18,9 +19,9 @@ final class Base64 extends Coder
 
     private bool $urlSafe;
 
-    public function encode(string $decoded, ?bool $urlSafe = null): string
+    public function encode(string $decoded, bool|null $urlSafe = null): string
     {
-        $this->urlSafe = $urlSafe ?? self::URL_SAFE;
+        $this->urlSafe = $urlSafe ?? false;
         return parent::encode($decoded);
     }
 
@@ -35,13 +36,11 @@ final class Base64 extends Coder
 
     protected function doDecode(string $encoded): string
     {
-        $decoded = base64_decode(
+        return OptionalString::ofFalsable(base64_decode(
             str_replace(self::URL_REPLACE_TABLE[1], self::URL_REPLACE_TABLE[0], $encoded),
             strict: true,
+        ))->orElseThrow(
+            static fn () => new Exception\CoderCouldNotDecodeData(__METHOD__, $encoded),
         );
-        if ($decoded === false) {
-            throw new Exception\CouldNotDecodeData(__METHOD__, $encoded);
-        }
-        return $decoded;
     }
 }

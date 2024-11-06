@@ -6,17 +6,19 @@ namespace PetrKnap\Binary\Coder;
 
 use Throwable;
 
+/**
+ * @internal shared logic
+ */
 abstract class Coder implements CoderInterface
 {
     public function encode(string $decoded): string
     {
         try {
             return $this->doEncode($decoded);
+        } catch (Exception\CoderCouldNotEncodeData $exception) {
+            throw $exception;
         } catch (Throwable $reason) {
-            if ($reason instanceof Exception\CouldNotEncodeData) {
-                throw $reason;
-            }
-            throw new Exception\CouldNotEncodeData(__METHOD__, $decoded, $reason);
+            throw new Exception\CoderCouldNotEncodeData(__METHOD__, $decoded, $reason);
         }
     }
 
@@ -24,11 +26,10 @@ abstract class Coder implements CoderInterface
     {
         try {
             return $this->doDecode($encoded);
+        } catch (Exception\CoderCouldNotDecodeData $exception) {
+            throw $exception;
         } catch (Throwable $reason) {
-            if ($reason instanceof Exception\CouldNotDecodeData) {
-                throw $reason;
-            }
-            throw new Exception\CouldNotDecodeData(__METHOD__, $encoded, $reason);
+            throw new Exception\CoderCouldNotDecodeData(__METHOD__, $encoded, $reason);
         }
     }
 

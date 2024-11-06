@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace PetrKnap\Binary\Coder\Exception;
 
-use PetrKnap\Binary\Exception\BinaryException;
+use PetrKnap\Binary\Exception\Exception;
 
-interface CoderException extends BinaryException
+interface CoderException extends Exception
 {
 }

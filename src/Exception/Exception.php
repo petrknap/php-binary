@@ -6,6 +6,9 @@ namespace PetrKnap\Binary\Exception;
 
 use Throwable;
 
-interface BinaryException extends Throwable
+/**
+ * @internal root exception
+ */
+interface Exception extends Throwable
 {
 }

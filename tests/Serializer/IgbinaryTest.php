@@ -4,21 +4,15 @@ declare(strict_types=1);
 
 namespace PetrKnap\Binary\Serializer;
 
-use PetrKnap\Shorts\Exception\MissingRequirement;
-
 final class IgbinaryTest extends SerializerTestCase
 {
     public static function getSerialized(): string
     {
-        return base64_decode(''); // @TODO
+        return base64_decode('AAAAAhcIc3RkQ2xhc3MUBhEFYXJyYXkUABEGYmluYXJ5BgARBWZsb2F0DAAAAAAAAAAAEQNpbnQGABEEbnVsbAARBnN0cmluZw0=');
     }
 
     public static function getSerializer(): SerializerInterface
     {
-        try {
-            return new Igbinary();
-        } catch (MissingRequirement $reason) {
-            self::markTestSkipped($reason->getMessage());
-        }
+        return new Igbinary();
     }
 }
