@@ -1,5 +1,4 @@
 {
-  "WARNING": "This file is updated automatically. All keys will be overwritten, except of 'conflict', 'keywords', 'require', 'require-dev', 'scripts' and 'suggest'.",
   "autoload": {
     "psr-4": {
       "PetrKnap\\Binary\\": "src"
