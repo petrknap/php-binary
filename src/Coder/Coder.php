@@ -14,7 +14,7 @@ abstract class Coder implements CoderInterface
     public function encode(string $decoded): string
     {
         try {
-            return $this->doEncode($decoded);
+            return @$this->doEncode($decoded);
         } catch (Exception\CoderCouldNotEncodeData $exception) {
             throw $exception;
         } catch (Throwable $reason) {
@@ -25,7 +25,7 @@ abstract class Coder implements CoderInterface
     public function decode(string $encoded): string
     {
         try {
-            return $this->doDecode($encoded);
+            return @$this->doDecode($encoded);
         } catch (Exception\CoderCouldNotDecodeData $exception) {
             throw $exception;
         } catch (Throwable $reason) {
@@ -34,11 +34,15 @@ abstract class Coder implements CoderInterface
     }
 
     /**
+     * @note errors will be silenced
+     *
      * @throws Throwable
      */
     abstract protected function doEncode(string $decoded): string;
 
     /**
+     * @note errors will be silenced
+     *
      * @throws Throwable
      */
     abstract protected function doDecode(string $encoded): string;
