@@ -14,7 +14,7 @@ abstract class Serializer implements SerializerInterface
     public function serialize(mixed $serializable): string
     {
         try {
-            return $this->doSerialize($serializable);
+            return @$this->doSerialize($serializable);
         } catch (Exception\SerializerCouldNotSerializeData $exception) {
             throw $exception;
         } catch (Throwable $reason) {
@@ -25,7 +25,7 @@ abstract class Serializer implements SerializerInterface
     public function unserialize(string $serialized): mixed
     {
         try {
-            return $this->doUnserialize($serialized);
+            return @$this->doUnserialize($serialized);
         } catch (Exception\SerializerCouldNotUnserializeData $exception) {
             throw $exception;
         } catch (Throwable $reason) {
@@ -34,11 +34,15 @@ abstract class Serializer implements SerializerInterface
     }
 
     /**
+     * @note errors will be silenced
+     *
      * @throws Throwable
      */
     abstract protected function doSerialize(mixed $serializable): string;
 
     /**
+     * @note errors will be silenced
+     *
      * @throws Throwable
      */
     abstract protected function doUnserialize(string $serialized): mixed;
