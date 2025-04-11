@@ -25,6 +25,7 @@
   ],
   "homepage": "https://github.com/petrknap/php-binary",
   "keywords": [
+    "ascii",
     "base64",
     "binary",
     "checksum",
