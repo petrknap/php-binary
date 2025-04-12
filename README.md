@@ -1,7 +1,9 @@
 # Library for work with binary data and objects
 
 Simple library for work with binary data and objects in PHP.
-See the examples below for more information, or check out [`Encoder`](./src/Encoder.php), [`Decoder`](./src/Decoder.php), [`Serializer`](./src/Serializer.php) and [`Byter`](./src/Byter.php).
+See the examples below for more information, or check out [`Encoder`](./src/Encoder.php), [`Decoder`](./src/Decoder.php), [`Serializer`](./src/Serializer.php), [`Byter`](./src/Byter.php) and [`Ascii`](./src/Ascii.php).
+
+## Coder
 
 ```php
 namespace PetrKnap\Binary;
@@ -12,6 +14,8 @@ $decoded = Binary::decode($encoded)->base64()->zlib()->checksum()->data;
 
 printf('Data was coded into `%s` %s.', $encoded, $decoded === $data ? 'successfully' : 'unsuccessfully');
 ```
+
+## Serializer
 
 ```php
 namespace PetrKnap\Binary;
@@ -25,6 +29,8 @@ $unserialized = Binary::unserialize($serialized);
 
 printf('Data was serialized into `%s` %s.', base64_encode($serialized), $unserialized === $data ? 'successfully' : 'unsuccessfully');
 ```
+
+## Self-serializer
 
 ```php
 namespace PetrKnap\Binary;
@@ -54,6 +60,8 @@ printf(
 );
 ```
 
+## Byter
+
 ```php
 namespace PetrKnap\Binary;
 
@@ -67,6 +75,19 @@ printf(
     'Hashes and data was unbitten into `%s` %s.',
     base64_encode($unbitten),
     $sha1Bite === $sha1 && $md5Bite === $md5 && $dataBite === $data ? 'successfully' : 'unsuccessfully',
+);
+```
+
+## ASCII
+
+```php
+namespace PetrKnap\Binary;
+
+printf(
+    Ascii::GroupSeparator->join(
+        Ascii::RecordSeparator->join(Ascii::UnitSeparator->join('200', 'EUR'), 'Maya Wilson'),
+        Ascii::RecordSeparator->join(Ascii::UnitSeparator->join('1600', 'USD'), 'Quinton Rice'),
+    ),
 );
 ```
 
