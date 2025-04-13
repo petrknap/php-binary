@@ -83,12 +83,10 @@ printf(
 ```php
 namespace PetrKnap\Binary;
 
-printf(
-    Ascii::GroupSeparator->join(
-        Ascii::RecordSeparator->join(Ascii::UnitSeparator->join('200', 'EUR'), 'Maya Wilson'),
-        Ascii::RecordSeparator->join(Ascii::UnitSeparator->join('1600', 'USD'), 'Quinton Rice'),
-    ),
-);
+printf(Ascii::RecordSeparator->join(
+    Ascii::UnitSeparator->join('200', 'EUR', 'Maya Wilson'),
+    Ascii::UnitSeparator->join('1600', 'USD', 'Quinton Rice'),
+));
 ```
 
 ---
