@@ -19,7 +19,7 @@ abstract class Coder implements CoderInterface, Stringable
     /**
      * @param string $data may contain binary data
      */
-    final public function __construct(
+    public function __construct(
         public readonly string $data = '',
     ) {
     }
