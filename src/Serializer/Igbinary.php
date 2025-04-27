@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace PetrKnap\Binary\Serializer;
 
+use PetrKnap\Optional\Optional;
+use PetrKnap\Optional\OptionalString;
 use PetrKnap\Shorts\HasRequirements;
 
 /**
@@ -26,19 +28,15 @@ final class Igbinary extends Serializer
 
     protected function doSerialize(mixed $serializable): string
     {
-        $serialized = igbinary_serialize($serializable);
-        if ($serialized === null) {
-            throw new Exception\CouldNotSerializeData(__METHOD__, $serializable);
-        }
-        return $serialized;
+        return OptionalString::ofFalsable(igbinary_serialize($serializable) ?? false)->orElseThrow(
+            static fn () => new Exception\SerializerCouldNotSerializeData(__METHOD__, $serializable),
+        );
     }
 
     protected function doUnserialize(string $serialized): mixed
     {
-        $serializable = igbinary_unserialize($serialized);
-        if ($serializable === null || $serializable === false) {
-            throw new Exception\CouldNotUnserializeData(__METHOD__, $serialized);
-        }
-        return $serializable;
+        return Optional::ofFalsable(igbinary_unserialize($serialized) ?? false)->orElseThrow(
+            static fn () => new Exception\SerializerCouldNotUnserializeData(__METHOD__, $serialized),
+        );
     }
 }

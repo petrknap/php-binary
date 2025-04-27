@@ -4,12 +4,43 @@ declare(strict_types=1);
 
 namespace PetrKnap\Binary\Serializer;
 
-use PHPUnit\Framework\TestCase;
+use PetrKnap\Binary\TestCase;
 use stdClass;
 
 abstract class SerializerTestCase extends TestCase
 {
-    public static function getSerializable(): stdClass
+    public function testSerializesSerializable(): void
+    {
+        self::assertBinarySame(
+            static::getSerialized(),
+            static::getSerializer()->serialize(self::getSerializable()),
+        );
+    }
+
+    public function testSerializeThrowsOnNonserializable(): void
+    {
+        self::expectException(Exception\SerializerCouldNotSerializeData::class);
+
+        static::getSerializer()->serialize(new class () {
+        });
+    }
+
+    public function testUnserializesSerialized(): void
+    {
+        self::assertEquals(
+            self::getSerializable(),
+            static::getSerializer()->unserialize(static::getSerialized()),
+        );
+    }
+
+    public function testSerializeThrowsOnNonserialized(): void
+    {
+        self::expectException(Exception\SerializerCouldNotUnserializeData::class);
+
+        static::getSerializer()->unserialize('?' . static::getSerialized());
+    }
+
+    private static function getSerializable(): stdClass
     {
         $serializable = new stdClass();
         $serializable->array = [];
@@ -22,38 +53,7 @@ abstract class SerializerTestCase extends TestCase
         return $serializable;
     }
 
-    abstract public static function getSerialized(): string;
+    abstract protected static function getSerialized(): string;
 
-    abstract public static function getSerializer(): SerializerInterface;
-
-    public function testSerializesSerializable(): void
-    {
-        self::assertEquals(
-            static::getSerialized(),
-            static::getSerializer()->serialize(static::getSerializable()),
-        );
-    }
-
-    public function testSerializeThrowsOnNonserializable(): void
-    {
-        self::expectException(Exception\CouldNotSerializeData::class);
-
-        static::getSerializer()->serialize(new class () {
-        });
-    }
-
-    public function testUnserializesSerialized(): void
-    {
-        self::assertEquals(
-            static::getSerializable(),
-            static::getSerializer()->unserialize(static::getSerialized()),
-        );
-    }
-
-    public function testSerializeThrowsOnNonserialized(): void
-    {
-        self::expectException(Exception\CouldNotUnserializeData::class);
-
-        static::getSerializer()->unserialize('?' . static::getSerialized());
-    }
+    abstract protected static function getSerializer(): SerializerInterface;
 }

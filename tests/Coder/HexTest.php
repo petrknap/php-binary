@@ -21,7 +21,7 @@ final class HexTest extends CoderTestCase
     #[DataProvider('data')]
     public function testEncodes(string $decoded, string $encoded): void
     {
-        self::assertSame(
+        self::assertBinarySame(
             $encoded,
             (new Hex())->encode(
                 $decoded,
@@ -32,7 +32,7 @@ final class HexTest extends CoderTestCase
     #[DataProvider('data')]
     public function testDecodes(string $decoded, string $encoded): void
     {
-        self::assertSame(
+        self::assertBinarySame(
             $decoded,
             (new Hex())->decode(
                 $encoded,
@@ -43,7 +43,7 @@ final class HexTest extends CoderTestCase
     #[DataProvider('dataDecodeThrows')]
     public function testDecodeThrows(string $data): void
     {
-        self::expectException(Exception\CouldNotDecodeData::class);
+        self::expectException(Exception\CoderCouldNotDecodeData::class);
 
         (new Hex())->decode(
             $data,

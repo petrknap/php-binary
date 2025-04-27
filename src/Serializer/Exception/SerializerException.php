@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace PetrKnap\Binary\Serializer\Exception;
 
-use PetrKnap\Binary\Exception\BinaryException;
+use PetrKnap\Binary\Exception\Exception;
 
-interface SerializerException extends BinaryException
+interface SerializerException extends Exception
 {
 }

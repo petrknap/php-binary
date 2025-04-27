@@ -4,18 +4,18 @@ declare(strict_types=1);
 
 namespace PetrKnap\Binary;
 
-class Decoder extends Coder implements DecoderInterface
+final class Decoder extends Coder
 {
     public function base64(): static
     {
-        return static::create($this, (new Coder\Base64())->decode(
+        return $this->withData((new Coder\Base64())->decode(
             $this->data,
         ));
     }
 
-    public function checksum(?string $algorithm = null): static
+    public function checksum(string|null $algorithm = null): static
     {
-        return static::create($this, (new Coder\Checksum())->decode(
+        return $this->withData((new Coder\Checksum())->decode(
             $this->data,
             algorithm: $algorithm,
         ));
@@ -23,14 +23,21 @@ class Decoder extends Coder implements DecoderInterface
 
     public function hex(): static
     {
-        return static::create($this, (new Coder\Hex())->decode(
+        return $this->withData((new Coder\Hex())->decode(
             $this->data,
         ));
     }
 
-    public function zlib(?int $maxLength = null): static
+    public function xz(): static
     {
-        return static::create($this, (new Coder\Zlib())->decode(
+        return $this->withData((new Coder\Xz())->decode(
+            $this->data,
+        ));
+    }
+
+    public function zlib(int|null $maxLength = null): static
+    {
+        return $this->withData((new Coder\Zlib())->decode(
             $this->data,
             maxLength: $maxLength,
         ));
