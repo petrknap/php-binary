@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace PetrKnap\Binary;
 
 use PetrKnap\Shorts\Exception;
+use Stringable;
 
 /**
  * @internal please use subclass
@@ -13,10 +14,13 @@ use PetrKnap\Shorts\Exception;
  *
  * @implements CoderInterface<Exception\CouldNotProcessData>
  */
-abstract class Coder implements CoderInterface
+abstract class Coder implements CoderInterface, Stringable
 {
-    public function __construct(
-        protected readonly string $data = '',
+    /**
+     * @param string $data may contain binary data
+     */
+    final public function __construct(
+        public readonly string $data = '',
     ) {
     }
 
@@ -25,7 +29,18 @@ abstract class Coder implements CoderInterface
         return static::create($this, $data);
     }
 
-    public function getData(): string
+    /**
+     * @deprecated use readonly property {@see self::$data}
+     */
+    final public function getData(): string
+    {
+        return $this->data;
+    }
+
+    /**
+     * @note this is just a helper, this class is not supposed to implement {@see BinariableInterface}
+     */
+    public function __toString(): string
     {
         return $this->data;
     }

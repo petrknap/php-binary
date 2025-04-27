@@ -12,7 +12,7 @@ final class EncoderTest extends TestCase
     {
         self::assertSame(
             Coder\Base64Test::getEncodedData(),
-            (new Encoder(Coder\Base64Test::getDecodedData()))->base64()->getData(),
+            (new Encoder(Coder\Base64Test::getDecodedData()))->base64()->data,
         );
     }
 
@@ -20,7 +20,7 @@ final class EncoderTest extends TestCase
     {
         self::assertSame(
             Coder\ChecksumTest::getEncodedData(),
-            (new Encoder(Coder\ChecksumTest::getDecodedData()))->checksum()->getData(),
+            (new Encoder(Coder\ChecksumTest::getDecodedData()))->checksum()->data,
         );
     }
 
@@ -28,7 +28,7 @@ final class EncoderTest extends TestCase
     {
         self::assertSame(
             Coder\HexTest::getEncodedData(),
-            (new Encoder(Coder\HexTest::getDecodedData()))->hex()->getData(),
+            (new Encoder(Coder\HexTest::getDecodedData()))->hex()->data,
         );
     }
 
@@ -36,7 +36,7 @@ final class EncoderTest extends TestCase
     {
         self::assertSame(
             Coder\ZlibTest::getEncodedData(),
-            (new Encoder(Coder\ZlibTest::getDecodedData()))->zlib()->getData(),
+            (new Encoder(Coder\ZlibTest::getDecodedData()))->zlib()->data,
         );
     }
 }
