@@ -9,7 +9,7 @@ interface OneWaySelfSerializerInterface
     /**
      * @return string binary representation of this instance
      *
-     * @throws Exception\CouldNotSerializeData
+     * @throws Exception\SerializerCouldNotSerializeData
      */
     public function toBinary(): string;
 }

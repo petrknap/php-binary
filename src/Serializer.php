@@ -8,14 +8,14 @@ namespace PetrKnap\Binary;
  * @see Coder\Zlib
  * @see Serializer\Php
  */
-class Serializer extends Serializer\Serializer
+final class Serializer extends Serializer\Serializer
 {
     protected readonly Coder\CoderInterface $coder;
     protected readonly Serializer\SerializerInterface $serializer;
 
     public function __construct(
-        ?Coder\CoderInterface $coder = null,
-        ?Serializer\SerializerInterface $serializer = null,
+        Coder\CoderInterface|null $coder = null,
+        Serializer\SerializerInterface|null $serializer = null,
     ) {
         $this->coder = $coder ?? new Coder\Zlib();
         $this->serializer = $serializer ?? new Serializer\Php();

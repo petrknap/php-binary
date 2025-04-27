@@ -4,13 +4,11 @@ declare(strict_types=1);
 
 namespace PetrKnap\Binary;
 
-use PHPUnit\Framework\TestCase;
-
 final class DecoderTest extends TestCase
 {
     public function testDecodesBase64(): void
     {
-        self::assertSame(
+        self::assertBinarySame(
             Coder\Base64Test::getDecodedData(),
             (new Decoder(Coder\Base64Test::getEncodedData()))->base64()->data,
         );
@@ -18,7 +16,7 @@ final class DecoderTest extends TestCase
 
     public function testDecodesChecksum(): void
     {
-        self::assertSame(
+        self::assertBinarySame(
             Coder\ChecksumTest::getDecodedData(),
             (new Decoder(Coder\ChecksumTest::getEncodedData()))->checksum()->data,
         );
@@ -26,15 +24,23 @@ final class DecoderTest extends TestCase
 
     public function testDecodesHex(): void
     {
-        self::assertSame(
+        self::assertBinarySame(
             Coder\HexTest::getDecodedData(),
             (new Decoder(Coder\HexTest::getEncodedData()))->hex()->data,
         );
     }
 
+    public function testDecodesXz(): void
+    {
+        self::assertBinarySame(
+            Coder\XzTest::getDecodedData(),
+            (new Decoder(Coder\XzTest::getEncodedData()))->xz()->data,
+        );
+    }
+
     public function testDecodesZlib(): void
     {
-        self::assertSame(
+        self::assertBinarySame(
             Coder\ZlibTest::getDecodedData(),
             (new Decoder(Coder\ZlibTest::getEncodedData()))->zlib()->data,
         );

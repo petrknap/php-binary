@@ -4,17 +4,12 @@ declare(strict_types=1);
 
 namespace PetrKnap\Binary;
 
-use PetrKnap\Shorts\Exception;
 use Stringable;
 
 /**
- * @internal please use subclass
- *
- * @phpstan-consistent-constructor override {@see self::create()} if not
- *
- * @implements CoderInterface<Exception\CouldNotProcessData>
+ * @internal shared logic
  */
-abstract class Coder implements CoderInterface, Stringable
+abstract class Coder implements Stringable
 {
     /**
      * @param string $data may contain binary data
@@ -24,18 +19,45 @@ abstract class Coder implements CoderInterface, Stringable
     ) {
     }
 
-    public function withData(string $data): static
+    final public function withData(string $data): static
     {
-        return static::create($this, $data);
+        return new static($data);
     }
 
     /**
-     * @deprecated use readonly property {@see self::$data}
+     * @see Coder\Base64
+     *
+     * @throws Coder\Exception\CoderException
      */
-    final public function getData(): string
-    {
-        return $this->data;
-    }
+    abstract public function base64(): static;
+
+    /**
+     * @see Coder\Checksum
+     *
+     * @throws Coder\Exception\CoderException
+     */
+    abstract public function checksum(string|null $algorithm = null): static;
+
+    /**
+     * @see Coder\Hex
+     *
+     * @throws Coder\Exception\CoderException
+     */
+    abstract public function hex(): static;
+
+    /**
+     * @see Coder\Xz
+     *
+     * @throws Coder\Exception\CoderException
+     */
+    abstract public function xz(): static;
+
+    /**
+     * @see Coder\zlib
+     *
+     * @throws Coder\Exception\CoderException
+     */
+    abstract public function zlib(): static;
 
     /**
      * @note this is just a helper, this class is not supposed to implement {@see BinariableInterface}
@@ -43,10 +65,5 @@ abstract class Coder implements CoderInterface, Stringable
     public function __toString(): string
     {
         return $this->data;
-    }
-
-    protected static function create(self $coder, string $data): static
-    {
-        return new static($data);
     }
 }
