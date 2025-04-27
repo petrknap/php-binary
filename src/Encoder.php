@@ -4,19 +4,19 @@ declare(strict_types=1);
 
 namespace PetrKnap\Binary;
 
-class Encoder extends Coder implements EncoderInterface
+final class Encoder extends Coder
 {
-    public function base64(?bool $urlSafe = null): static
+    public function base64(bool|null $urlSafe = null): static
     {
-        return static::create($this, (new Coder\Base64())->encode(
+        return $this->withData((new Coder\Base64())->encode(
             $this->data,
             urlSafe: $urlSafe,
         ));
     }
 
-    public function checksum(?string $algorithm = null): static
+    public function checksum(string|null $algorithm = null): static
     {
-        return static::create($this, (new Coder\Checksum())->encode(
+        return $this->withData((new Coder\Checksum())->encode(
             $this->data,
             algorithm: $algorithm,
         ));
@@ -24,14 +24,22 @@ class Encoder extends Coder implements EncoderInterface
 
     public function hex(): static
     {
-        return static::create($this, (new Coder\Hex())->encode(
+        return $this->withData((new Coder\Hex())->encode(
             $this->data,
         ));
     }
 
-    public function zlib(?int $encoding = null, ?int $level = null): static
+    public function xz(int|null $compressionPreset = null): static
     {
-        return static::create($this, (new Coder\Zlib())->encode(
+        return $this->withData((new Coder\Xz())->encode(
+            $this->data,
+            compressionPreset: $compressionPreset,
+        ));
+    }
+
+    public function zlib(int|null $encoding = null, int|null $level = null): static
+    {
+        return $this->withData((new Coder\Zlib())->encode(
             $this->data,
             encoding: $encoding,
             level: $level,

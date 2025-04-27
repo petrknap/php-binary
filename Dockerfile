@@ -12,6 +12,15 @@ RUN apt-get update \
 COPY --from=composer:2 /usr/bin/composer /usr/local/bin/composer
 # endregion
 
+# region included igbinary
+# hadolint ignore=DL3008
+RUN pecl install -o -f \
+      igbinary \
+ && docker-php-ext-enable \
+      igbinary \
+;
+# endregion
+
 # region included composer-library
 WORKDIR /app
 COPY . .

@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace PetrKnap\Binary\Coder;
 
-use PetrKnap\Shorts\Exception\MissingRequirement;
 use PHPUnit\Framework\Attributes\DataProvider;
 
 final class ChecksumTest extends CoderTestCase
@@ -21,9 +20,9 @@ final class ChecksumTest extends CoderTestCase
     #[DataProvider('data')]
     public function testEncodes(string $decoded, string $encoded, string $algorithm): void
     {
-        self::assertSame(
+        self::assertBinarySame(
             $encoded,
-            self::getChecksum()->encode(
+            (new Checksum())->encode(
                 $decoded,
                 algorithm: $algorithm,
             ),
@@ -33,9 +32,9 @@ final class ChecksumTest extends CoderTestCase
     #[DataProvider('dataEncodeThrows')]
     public function testEncodeThrows(string $algorithm): void
     {
-        self::expectException(Exception\CouldNotEncodeData::class);
+        self::expectException(Exception\CoderCouldNotEncodeData::class);
 
-        self::getChecksum()->encode(
+        (new Checksum())->encode(
             self::getDecodedData(),
             algorithm: $algorithm,
         );
@@ -51,9 +50,9 @@ final class ChecksumTest extends CoderTestCase
     #[DataProvider('data')]
     public function testDecodes(string $decoded, string $encoded, string $algorithm): void
     {
-        self::assertSame(
+        self::assertBinarySame(
             $decoded,
-            self::getChecksum()->decode(
+            (new Checksum())->decode(
                 $encoded,
                 algorithm: $algorithm,
             ),
@@ -63,9 +62,9 @@ final class ChecksumTest extends CoderTestCase
     #[DataProvider('dataDecodeThrows')]
     public function testDecodeThrows(string $data, string $algorithm): void
     {
-        self::expectException(Exception\CouldNotDecodeData::class);
+        self::expectException(Exception\CoderCouldNotDecodeData::class);
 
-        self::getChecksum()->decode(
+        (new Checksum())->decode(
             $data,
             algorithm: $algorithm,
         );
@@ -75,18 +74,9 @@ final class ChecksumTest extends CoderTestCase
     {
         return [
             'wrong algorithm' => [self::getEncodedData(), '?'],
-            'short data' => ['?', Checksum::ALGORITHM],
-            'wrong data' => [self::getDecodedData(), Checksum::ALGORITHM],
-            'wrong checksum' => ['?' . self::getEncodedData(), Checksum::ALGORITHM],
+            'short data' => ['?', Checksum::DEFAULT_ALGORITHM],
+            'wrong data' => [self::getDecodedData(), Checksum::DEFAULT_ALGORITHM],
+            'wrong checksum' => ['?' . self::getEncodedData(), Checksum::DEFAULT_ALGORITHM],
         ];
-    }
-
-    private static function getChecksum(): Checksum
-    {
-        try {
-            return new Checksum();
-        } catch (MissingRequirement $reason) {
-            self::markTestSkipped($reason->getMessage());
-        }
     }
 }

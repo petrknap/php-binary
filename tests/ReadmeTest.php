@@ -24,6 +24,7 @@ class ReadmeTest extends TestCase implements MarkdownFileTestInterface
             'serializer' => 'Data was serialized into `S7QysqoutjKxUiqpLEhVsi62srRSysxNTE/VL8hLB/GBUimJJYkgpoWxlVJngJ87L5cUFwMDA6+nh0sQkGYEYQ42ICkveqQTxCkOcndiWHdO5iVYlYtjiER48o/9Ux7aM7C9Z1qixnnFBCjB4Onq57LOKaFJyboWAA==` successfully.',
             'self-serializer' => 'Data object was serialized into `DckxCsMwDAXQq4jMJbTd6qwdewnjfMoHSw6W1KX07s324NVyK1+W6+blcS/La0yo8PBU2UcfU5whVREXacMcLRA5pe486I32FnTGKs+kywcGq3Eqe0w2ws+GwiJ1XbbfHw==` successfully.',
             'byter' => 'Hashes and data was unbitten into `IoPwxcGHZQM0gfF966vHI3kleehoRKHtC32Xh30RDlg5E026hmlpFnFwbchsoQARSibVpfbWVfuwAHLbGxjFl9eC8fiGaWkWcXBtyGyhABFKJtWl9tZV+7AActsbGMWX14Lx+A==` successfully.',
+            'ascii' => '200' . Ascii::UNIT_SEPARATOR . 'EUR' . Ascii::UNIT_SEPARATOR . 'Maya Wilson' . Ascii::RECORD_SEPARATOR . '1600' . Ascii::UNIT_SEPARATOR . 'USD' . Ascii::UNIT_SEPARATOR . 'Quinton Rice',
         ];
     }
 }
