@@ -25,14 +25,6 @@ abstract class Coder implements Stringable
     }
 
     /**
-     * @deprecated use readonly property {@see self::$data}
-     */
-    final public function getData(): string
-    {
-        return $this->data;
-    }
-
-    /**
      * @see Coder\Base64
      *
      * @throws Coder\Exception\CoderException
