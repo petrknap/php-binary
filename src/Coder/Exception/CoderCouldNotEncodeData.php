@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace PetrKnap\Binary\Coder\Exception;
 
-use PetrKnap\Shorts\Exception\CouldNotProcessData;
+use PetrKnap\Binary\Exception\CouldNotProcessData;
 
 /**
  * @extends CouldNotProcessData<string>

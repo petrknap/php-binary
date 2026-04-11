@@ -7,7 +7,11 @@ namespace PetrKnap\Binary\Serializer;
 interface SerializerInterface
 {
     /**
-     * @throws Exception\SerializerCouldNotSerializeData
+     * @template TSerializable of mixed
+     *
+     * @param TSerializable $serializable
+     *
+     * @throws Exception\SerializerCouldNotSerializeData<TSerializable>
      */
     public function serialize(mixed $serializable): string;
 
