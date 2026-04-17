@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace PetrKnap\Binary;
 
-use PetrKnap\Shorts\HasRequirements;
+use PetrKnap\HasRequirements\HasRequirements;
 use RuntimeException;
 
 final class Byter

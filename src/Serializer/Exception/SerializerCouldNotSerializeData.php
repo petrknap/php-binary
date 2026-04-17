@@ -4,10 +4,12 @@ declare(strict_types=1);
 
 namespace PetrKnap\Binary\Serializer\Exception;
 
-use PetrKnap\Shorts\Exception\CouldNotProcessData;
+use PetrKnap\Binary\Exception\CouldNotProcessData;
 
 /**
- * @extends CouldNotProcessData<mixed>
+ * @template TData of mixed
+ *
+ * @extends CouldNotProcessData<TData>
  */
 final class SerializerCouldNotSerializeData extends CouldNotProcessData implements SerializerException
 {

@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace PetrKnap\Binary\Serializer;
 
+use PetrKnap\HasRequirements\HasRequirements;
 use PetrKnap\Optional\Optional;
 use PetrKnap\Optional\OptionalString;
-use PetrKnap\Shorts\HasRequirements;
 
 /**
  * @see igbinary_serialize()

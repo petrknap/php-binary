@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace PetrKnap\Binary\Coder;
 
+use PetrKnap\HasRequirements\HasRequirements;
 use PetrKnap\Optional\OptionalString;
-use PetrKnap\Shorts\HasRequirements;
 
 /**
  * @see zlib_encode()

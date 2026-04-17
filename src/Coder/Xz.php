@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace PetrKnap\Binary\Coder;
 
-use PetrKnap\Shorts\HasRequirements;
+use PetrKnap\HasRequirements\HasRequirements;
 use PetrKnap\XzUtils\Xz as Inner;
 
 final class Xz extends Coder
