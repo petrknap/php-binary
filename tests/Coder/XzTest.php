@@ -12,9 +12,9 @@ final class XzTest extends CoderTestCase
     {
         $data = self::getDecodedData();
         return [
-            'default compression preset' => [$data, base64_decode('/Td6WFoAAATm1rRGAgAhARYAAAB0L+Wj4AA7ABxdAG0OUG7jCUfPj0z08gJbP9KgthIHS/jgLMk44AAAwVvY3vTzsZsAATg8V3V2GB+2830BAAAAAARZWg=='), null],
-            'compression preset 0' => [$data, base64_decode('/Td6WFoAAATm1rRGAgAhAQwAAACPmEGc4AA7ABxdAG0OUG7jCUfPj0z08gJbP9KgthIHS/jgLMk44AAAwVvY3vTzsZsAATg8V3V2GB+2830BAAAAAARZWg=='), 0],
-            'compression preset 9' => [$data, base64_decode('/Td6WFoAAATm1rRGAgAhARwAAAAQz1jM4AA7ABxdAG0OUG7jCUfPj0z08gJbP9KgthIHS/jgLMk44AAAwVvY3vTzsZsAATg8V3V2GB+2830BAAAAAARZWg=='), 9],
+            'default compression preset' => [$data, base64_decode('/Td6WFoAAATm1rRGBMAkPCEBFgAAAAAAAAAAAPuWV53gADsAHF0AbQ5QbuMJR8+PTPTyAls/0qC2EgdL+OAsyTjgAADBW9je9POxmwABQDyphpD/H7bzfQEAAAAABFla'), null],
+            'compression preset 0' => [$data, base64_decode('/Td6WFoAAATm1rRGA8AkPCEBDAAAAAAAhAE4x+AAOwAcXQBtDlBu4wlHz49M9PICWz/SoLYSB0v44CzJOOAAAMFb2N7087GbAAE8PFOwGnwftvN9AQAAAAAEWVo='), 0],
+            'compression preset 9' => [$data, base64_decode('/Td6WFoAAATm1rRGBMAkPCEBHAAAAAAAAAAAADIGdYrgADsAHF0AbQ5QbuMJR8+PTPTyAls/0qC2EgdL+OAsyTjgAADBW9je9POxmwABQDyphpD/H7bzfQEAAAAABFla'), 9],
         ];
     }
 
